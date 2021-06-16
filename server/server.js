@@ -13,8 +13,8 @@ app.use(express.json(), express.urlencoded({extended: false}) )
 
 
 const api = require('./routes/photographer.routes')
-app.use('/public/', express.static('public'))
 
+app.use('/public/', express.static('public'))
 // if starts with /api go to api: photographer.routes
 app.use('/api/photos', api)
 

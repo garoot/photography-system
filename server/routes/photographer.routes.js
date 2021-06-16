@@ -20,6 +20,7 @@ const storage = multer.diskStorage({
 
 var upload = multer({
     storage: storage,
+    limits: { fileSize:  41943040},
     fileFilter: (req, file, cb) => {
         if(file.mimetype == "image/png" || file.mimetype == "image/jpg" || file.mimetype == "image/jpeg") {
             cb(null, true)
@@ -34,7 +35,7 @@ const Photo = require('../models/photographer.models')
 
 // create
 router.post('/upload', 
-    upload.array('imgCollection', 6), 
+    upload.array('imgCollection', 200), 
     photoControllers.uploadPhotos
 )
 // find all

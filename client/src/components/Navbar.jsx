@@ -21,11 +21,13 @@ import clsx from 'clsx';
 import MediaQuery from 'react-responsive';
 import { useMediaQuery } from 'react-responsive'
 import React, { useEffect, useState } from 'react';
+import { navigate } from '@reach/router';
+import { ClickAwayListener } from '@material-ui/core';
 
 
 
 
-const drawerWidth = 220;
+const drawerWidth = 260;
 const useStyles = makeStyles((theme) => ({
     root: {
         display: 'flex',
@@ -60,6 +62,8 @@ const useStyles = makeStyles((theme) => ({
     },
     drawerPaper: {
         width: drawerWidth,
+        // backgroundColor: '#bd4341'
+        backgroundColor: '#52aeca'
     },
     drawerHeader: {
         display: 'flex',
@@ -74,8 +78,9 @@ const Navbar = props => {
     const classes = useStyles();
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
+
     const handleDrawerOpen = () => {
-        setOpen(true);
+        setOpen(!open);
     };
 
     const handleDrawerClose = () => {
@@ -99,9 +104,13 @@ const Navbar = props => {
                 margin: '0px 30px'
             })
         }
+        setOpen(false)
     }, [])
+
+
     return (
         <div>
+
             <AppBar position="fixed" color="primary">
                 <Toolbar style={navStyle}>
                     <IconButton             
@@ -113,48 +122,50 @@ const Navbar = props => {
                     >
                         <MenuIcon />
                     </IconButton>
-                    <Typography variant="h6">
+                    <Typography variant="h6" onClick={()=> navigate('/')} style={{cursor: 'pointer'}}>
                         Photographer
                     </Typography>
                     <Button variant="contained" color="secondary">
                         Login
                     </Button>
                 </Toolbar>
+                <Drawer
+                    className={classes.drawer}
+                    variant="persistent"
+                    anchor="left"
+                    open={open}
+                    classes={{
+                        paper: classes.drawerPaper,
+                    }}
+                    
+                >
+                    <div className={classes.drawerHeader}>
+                    <IconButton onClick={handleDrawerClose}>
+                        {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+                    </IconButton>
+                    </div>
+                    <Divider />
+                    <List>
+                        <ListItem button>
+                            <ListItemIcon> 
+                                <MailIcon />
+                            </ListItemIcon>
+                            <ListItemText primary="Contact Us"/>
+                        </ListItem>
+                    </List>
+                    <Divider />
+                    <List>
+                        <ListItem button >
+                            <ListItemIcon> 
+                                <MailIcon />
+                            </ListItemIcon>
+                            <ListItemText primary="Contact Us"/>
+                        </ListItem>
+                    </List>
+                </Drawer>
             </AppBar>
-            <Drawer
-                className={classes.drawer}
-                variant="persistent"
-                anchor="left"
-                open={open}
-                classes={{
-                    paper: classes.drawerPaper,
-                }}
-                
-            >
-                <div className={classes.drawerHeader}>
-                <IconButton onClick={handleDrawerClose}>
-                    {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-                </IconButton>
-                </div>
-                <Divider />
-                <List>
-                    <ListItem button>
-                        <ListItemIcon> 
-                            <MailIcon />
-                        </ListItemIcon>
-                        <ListItemText primary="Contact Us"/>
-                    </ListItem>
-                </List>
-                <Divider />
-                <List>
-                    <ListItem button >
-                        <ListItemIcon> 
-                            <MailIcon />
-                        </ListItemIcon>
-                        <ListItemText primary="Contact Us"/>
-                    </ListItem>
-                </List>
-            </Drawer>
+            
+            
         </div>
     );
 };
