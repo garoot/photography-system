@@ -7,95 +7,46 @@ import Typography from '@material-ui/core/Typography'
 import IconButton from '@material-ui/core/IconButton'
 import MenuIcon from '@material-ui/icons/Menu'
 import { makeStyles, useTheme } from '@material-ui/core/styles';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
-import List from '@material-ui/core/List';
-import Divider from '@material-ui/core/Divider';
-import Drawer from '@material-ui/core/Drawer';
+// import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+// import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+// import ListItem from '@material-ui/core/ListItem';
+// import ListItemIcon from '@material-ui/core/ListItemIcon';
+// import ListItemText from '@material-ui/core/ListItemText';
+// import InboxIcon from '@material-ui/icons/MoveToInbox';
+// import MailIcon from '@material-ui/icons/Mail';
+// import List from '@material-ui/core/List';
+// import Divider from '@material-ui/core/Divider';
+// import Drawer from '@material-ui/core/Drawer';
 import clsx from 'clsx';
 import MediaQuery from 'react-responsive';
 import { useMediaQuery } from 'react-responsive'
 import React, { useEffect, useState } from 'react';
 import { navigate } from '@reach/router';
 import { ClickAwayListener } from '@material-ui/core';
+import { Modal } from '@material-ui/core';
+import Drawer from './DrawerBar';
+import Login from './Login';
 
 
-
-
-const drawerWidth = 260;
-const useStyles = makeStyles((theme) => ({
-    root: {
-        display: 'flex',
-    },
-    appBar: {
-        transition: theme.transitions.create(['margin', 'width'], {
-            easing: theme.transitions.easing.sharp,
-            duration: theme.transitions.duration.leavingScreen,
-        }),
-    },
-    appBarShift: {
-        width: `calc(100% - ${drawerWidth}px)`,
-        // marginLeft: drawerWidth,
-        transition: theme.transitions.create(['margin', 'width'], {
-            easing: theme.transitions.easing.easeOut,
-            duration: theme.transitions.duration.enteringScreen,
-        }),
-
-    },
-    menuButton: {
-        marginRight: theme.spacing(2),
-    },
-    title: {
-        flexGrow: 1,
-    },
-    hide: {
-        display: 'none',
-    },
-    drawer: {
-        width: drawerWidth,
-        flexShrink: 0,
-    },
-    drawerPaper: {
-        width: drawerWidth,
-        // backgroundColor: '#bd4341'
-        backgroundColor: '#52aeca'
-    },
-    drawerHeader: {
-        display: 'flex',
-        alignItems: 'center',
-        padding: theme.spacing(0, 1),
-        // necessary for content to be below app bar
-        ...theme.mixins.toolbar,
-        justifyContent: 'flex-end',
-    }
-}));
 const Navbar = props => {
-    const classes = useStyles();
-    const theme = useTheme();
-    const [open, setOpen] = React.useState(false);
-
-    const handleDrawerOpen = () => {
-        setOpen(!open);
-    };
-
-    const handleDrawerClose = () => {
-        setOpen(false);
-    };
+    const [openDrawer, setOpenDrawer] = useState(false);
     const [navStyle, setNavStyle] = useState({})
+    const [openAuth, setOpenAuth] = useState(false)
     const isDesktopOrLaptop = useMediaQuery({ minDeviceWidth: 1224 })
     const isTabletOrMobile = useMediaQuery({ maxWidth: 1224 })
 
+    const handleDrawerOpen = () => {
+        setOpenDrawer(true);
+    };
+    const handleAuthOpen = () => {
+        setOpenAuth(true)
+    }
     useEffect(()=>{
         if(isDesktopOrLaptop){
             setNavStyle({
                 display: 'flex',
                 justifyContent: 'space-between',
-                margin: '0px 200px'
+                margin: '0px 220px 0px 200px'
             })
         }else if(isTabletOrMobile){
             setNavStyle({
@@ -104,13 +55,11 @@ const Navbar = props => {
                 margin: '0px 30px'
             })
         }
-        setOpen(false)
+        setOpenDrawer(false)
     }, [])
-
 
     return (
         <div>
-
             <AppBar position="fixed" color="primary">
                 <Toolbar style={navStyle}>
                     <IconButton             
@@ -118,53 +67,26 @@ const Navbar = props => {
                         aria-label="open drawer"
                         edge="end"
                         onClick={handleDrawerOpen}
-                        className={clsx(open)} 
+                        className={clsx(openDrawer)} 
                     >
                         <MenuIcon />
                     </IconButton>
                     <Typography variant="h6" onClick={()=> navigate('/')} style={{cursor: 'pointer'}}>
                         Photographer
                     </Typography>
-                    <Button variant="contained" color="secondary">
+                    <Button onClick={handleAuthOpen} variant="contained" color="secondary" style={{color: 'rgba(28, 65, 68, 0.904)', fontWeight:'bold'}}>
                         Login
                     </Button>
                 </Toolbar>
-                <Drawer
-                    className={classes.drawer}
-                    variant="persistent"
-                    anchor="left"
-                    open={open}
-                    classes={{
-                        paper: classes.drawerPaper,
-                    }}
-                    
-                >
-                    <div className={classes.drawerHeader}>
-                    <IconButton onClick={handleDrawerClose}>
-                        {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-                    </IconButton>
-                    </div>
-                    <Divider />
-                    <List>
-                        <ListItem button>
-                            <ListItemIcon> 
-                                <MailIcon />
-                            </ListItemIcon>
-                            <ListItemText primary="Contact Us"/>
-                        </ListItem>
-                    </List>
-                    <Divider />
-                    <List>
-                        <ListItem button >
-                            <ListItemIcon> 
-                                <MailIcon />
-                            </ListItemIcon>
-                            <ListItemText primary="Contact Us"/>
-                        </ListItem>
-                    </List>
-                </Drawer>
             </AppBar>
-            
+            <Drawer 
+                open={openDrawer}
+                setOpen={setOpenDrawer}
+            />
+            <Login 
+                open={openAuth}
+                setOpen={setOpenAuth}
+            />
             
         </div>
     );
