@@ -22,9 +22,10 @@ var upload = multer({
     storage: storage,
     limits: { fileSize:  41943040},
     fileFilter: (req, file, cb) => {
-        if(file.mimetype == "image/png" || file.mimetype == "image/jpg" || file.mimetype == "image/jpeg") {
+        if(file.mimetype == "image/png" || file.mimetype == "image/jpg" || file.mimetype == "image/jpeg" ) {
             cb(null, true)
-        } else {
+        } 
+        else {
             cb(null, false);
             return cb(new Error('Only .png, .jpg and .jpeg format allowed'))
         }
@@ -38,11 +39,19 @@ router.post('/upload',
     upload.array('imgCollection', 200), 
     photoControllers.uploadPhotos
 )
+router.put('/gallery/update', 
+    upload.array('imgCollection', 6),
+    photoControllers.updateGallery
+    )
 // find all
 router.get("/", photoControllers.findAllPhotos)
+// find gallery photos
+router.get("/gallery", photoControllers.findGalleryPhotos)
 // find Photo by its propert: userID
 router.get("/:id", photoControllers.findUserPhotos)
 // delete Photo by its property: userID
 router.delete('/delete/:id', photoControllers.deleteUserPhotos)
+// delete photo by albumName
+router.delete('/delete/album/:albumName', photoControllers.deletePhotosByAlbumName)
 
 module.exports = router

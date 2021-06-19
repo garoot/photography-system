@@ -8,5 +8,4 @@ const RegForm = props => {
     );
 };
 
-
 export default RegForm;

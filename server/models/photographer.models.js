@@ -8,6 +8,12 @@ const PhotoSchema = new mongoose.Schema({
     userID: String,
     clientName: String,
     clientEmail: String,
+    galleryOrder: Number,
+    albumName: {
+        type: String,
+        required: [true, 'Album name is required'],
+        unique: [true, 'this name exists']
+    },
 }, {timestamps:true, collection:'photos'}
 )
 
@@ -29,7 +35,6 @@ const PhotographerSchema = new mongoose.Schema({
         required: [true, "password is required"]
     }
 })
-
 
 const Photographer = mongoose.model('Photographer', PhotographerSchema)
 const Photo = mongoose.model('Photo', PhotoSchema)

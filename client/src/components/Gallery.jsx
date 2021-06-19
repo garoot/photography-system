@@ -1,25 +1,60 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Box from '@material-ui/core/Box'
+import { useState } from 'react';
+import Grid from '@material-ui/core/Grid'
+import Carousel from 'react-material-ui-carousel'
+import { Paper, Button } from '@material-ui/core'
+import { useMediaQuery } from 'react-responsive'
+
 
 const Gallery = props => {
+    const isDesktopOrLaptop = useMediaQuery({ minDeviceWidth: 1224 })
+    const isTabletOrMobile = useMediaQuery({ maxWidth: 1224 })
+    const [photoHeight, setPhotoHeight] = useState()
     const galleryStyle={
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#282c34',
-        height: '100vh',
+        // backgroundColor: '#282c34',
+        backgroundColor: 'black',
+        height: '800px',
         // width: '80vw'
     }
-    const albumStyle = {
-        width: '70%',
-        display:'flex',
-        justifyContent: 'center'
+    const paperStyle = {
+        maxHeight: '600px',
     }
+    const galleryStyleMobile={
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        // backgroundColor: '#282c34',
+        backgroundColor: 'black',
+        width: '100vw',
+        height:'100vh'
+    }
+    const paperStyleMobile = {
+        maxWidth: '300px',
+        maxHeight: '500px',
+        // paddingBottom:'0px',
+        marginBottom:'0px'
+    }
+
+    const {galleryArray} = props
+    const [displayPhotos, setDisplayPhotos] = useState([])
+    useEffect(()=>{
+        setDisplayPhotos(galleryArray)
+    }, [galleryArray])
     return (
         <div style={galleryStyle}>
-            <Box style={albumStyle}>
-                Hello
-            </Box>
+            <Carousel >
+            {displayPhotos && displayPhotos.map(photo=> {
+                    return (
+                        <Paper style={isTabletOrMobile? paperStyleMobile: paperStyle}>
+                            <img src={photo} width={isTabletOrMobile&& "300px"} height={isTabletOrMobile?'500px': '600px'} alt="" />
+                        </Paper>
+                    )
+                })}
+            </Carousel>
         </div>
     );
 };
