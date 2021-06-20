@@ -133,7 +133,7 @@ const DrawerBar = props => {
                                 <ListItemText primary="Manage Photos"/>
                             </ListItem>
                         </Link>
-                        <Link to="/photos/manage" style={{textDecoration:'none'}}>
+                        <Link to="/gallery" style={{textDecoration:'none'}}>
                             <ListItem button className={classes.drawerButtons}>
                                 <ListItemIcon> 
                                     <TheatersIcon/>

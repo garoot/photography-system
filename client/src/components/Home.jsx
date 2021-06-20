@@ -25,18 +25,33 @@ const Home = props => {
         // console.log("gallery body:")
         // console.log(galleryBody)
     }, [galleryBody])
-    // getting gallery photos to distribute to PhotoManagement and Gallery
+
     useEffect(()=>{
-        axios.get("http://localhost:8000/api/photos/gallery")
+        // console.log("gallery body:")
+        // console.log(galleryBody)
+        console.log("GalleryArray:")
+        console.log(galleryArray)
+    }, [galleryArray])
+    // getting gallery photos to distribute to PhotoManagement and Gallery
+    useEffect(async ()=>{
+        await axios.get("http://localhost:8000/api/photos/gallery")
             .then(result=> {
-                // console.log("in Home.jsx useEffect, imgCollection:")
-                // console.log(result.data.gallery[0].imgCollection)
-                setGalleryBody(result.data.gallery)
+                console.log("in Home.jsx useEffect, imgCollection:")
+                console.log(result.data)
                 let gallery = result.data.gallery
-                let tmpGallery = result.data.gallery.imgCollection
-                console.log("tmpGallery:")
-                console.log(tmpGallery)
-                setGalleryArray(tmpGallery)
+                if(gallery){
+                    console.log('we have gallery')
+                    console.log(gallery)
+                    let tmpGallery = gallery.imgCollection
+                    console.log("gallery.imgCollection:")
+                    console.log(tmpGallery)
+                    setGalleryArray(tmpGallery)
+                }else{
+                    console.log("nothing in data.gallery")
+                }
+                // setGalleryBody(result.data.gallery[0].imgCollection)
+                // let gallery = result.data.gallery[0]
+
             })
             .catch(err=> console.log(err))
     }, [])

@@ -10,9 +10,31 @@ module.exports.uploadPhotos = (req,res) => {
     for(var i =0; i<req.files.length; i++){
         reqFiles.push(url + '/public/' + req.files[i].filename)
     }
-
+    if(req.body.deletedFiles){
+        let deletedFiles = []
+        // if deletedFiles is Array
+        if(Array.isArray(req.body.deletedFiles)){
+            deletedFiles = req.body.deletedFiles
+        }
+        // else: push it to deletedFiles
+        else{
+            deletedFiles.push(req.body.deletedFiles)
+        }
+        console.log("deletedFiles:")
+        console.log(deletedFiles)
+        for(let i =0; i<deletedFiles.length; i++){
+            let tmpFile = deletedFiles[i]
+            let path = tmpFile.split("http://localhost:8000/public/")[1]
+            fs.unlink("./public/"+path, err=>{
+                if(err) console.log(err);
+            })
+        }
+    }
     // if there is prev images, save them in prevCollection and concat reqFiles[]
+    // console.log(req.body)
+    
     if(req.body.prevCollection){
+        console.log("req.body.prevCollection")
         let dbCollection = []
         Photo.find({albumName:'gallery'})
             .then(result =>  {
@@ -37,26 +59,7 @@ module.exports.uploadPhotos = (req,res) => {
         console.log("prevCollection:")
         console.log(prevCollection)
 
-        if(req.body.deletedFiles){
-            let deletedFiles = []
-            // if deletedFiles is Array
-            if(Array.isArray(req.body.deletedFiles)){
-                deletedFiles = req.body.deletedFiles
-            }
-            // else: push it to deletedFiles
-            else{
-                deletedFiles.push(req.body.deletedFiles)
-            }
-            console.log("deletedFiles:")
-            console.log(deletedFiles)
-            for(let i =0; i<deletedFiles.length; i++){
-                let tmpFile = deletedFiles[i]
-                let path = tmpFile.split("http://localhost:8000/public/")[1]
-                fs.unlink("./public/"+path, err=>{
-                    if(err) console.log(err);
-                })
-            }
-        }
+        
         if(reqFiles.length>0){
             for(let i=0; i<reqFiles.length;i++){
                 prevCollection.push(reqFiles[i])
@@ -150,6 +153,7 @@ module.exports.deletePhotosByAlbumName = (req,res) => {
     //     console.log(object)
     //     res.status(400).json({error:"no images to delete idiot!"})
     // }
+    console.log(req.params.albumName)
         
     Photo.findOneAndDelete({'albumName': req.params.albumName})
         .then(response => {

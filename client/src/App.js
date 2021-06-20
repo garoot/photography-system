@@ -4,12 +4,13 @@ import Footer from './components/Footer';
 import { useMediaQuery } from 'react-responsive'
 
 function App() {
-  const isMobile = useMediaQuery({ maxHeight: 900, maxWidth: 450 })
+  const isMobile = useMediaQuery({ maxHeight: 900, maxWidth: 550 })
 
   return (
     <div >
       <Home/>
-      {isMobile? <></>:<Footer/>}
+      {/* {isMobile? <></>:<Footer/>} */}
+      <Footer />
     </div>
   );
 }

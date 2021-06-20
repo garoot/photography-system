@@ -50,7 +50,7 @@ const Gallery = props => {
             {displayPhotos && displayPhotos.map(photo=> {
                     return (
                         <Paper style={isTabletOrMobile? paperStyleMobile: paperStyle}>
-                            <img src={photo} width={isTabletOrMobile&& "300px"} height={isTabletOrMobile?'500px': '600px'} alt="" />
+                            <img onContextMenu={(e)=> e.preventDefault()} src={photo} width={isTabletOrMobile&& "300px"} height={isTabletOrMobile?'500px': '600px'} alt="" />
                         </Paper>
                     )
                 })}
