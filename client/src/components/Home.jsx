@@ -5,6 +5,7 @@ import Box from '@material-ui/core/Box'
 import Button from '@material-ui/core/Button'
 import LandingPage from './LandingPage';
 import Gallery from './Gallery';
+import ContactUs from './ContactUs';
 import Footer from './Footer';
 import { useMediaQuery } from 'react-responsive'
 import PhotoManagement from './PhotoManagement'
@@ -49,7 +50,8 @@ const Home = props => {
                 }else{
                     console.log("nothing in data.gallery")
                 }
-                // setGalleryBody(result.data.gallery[0].imgCollection)
+                setGalleryBody(result.data.gallery[0].imgCollection)
+                console.log(result.data.gallery[0].imgCollection)
                 // let gallery = result.data.gallery[0]
 
             })
@@ -73,6 +75,10 @@ const Home = props => {
                 <Gallery 
                     path="/gallery"
                     galleryArray={galleryArray}
+                />
+
+                <ContactUs 
+                    path="/contact"
                 />
 
             </Router>            

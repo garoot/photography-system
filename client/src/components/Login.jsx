@@ -47,7 +47,7 @@ const Login = props => {
         borderRadius: '20px',
     }
     const authFormStyle = {
-        width:'500px', 
+        width:'400px', 
         display:'flex',
         padding:'20px 30px 0px 30px', 
         justifyContent:'center',
@@ -79,13 +79,12 @@ const Login = props => {
             "&:hover": {
                 color: 'white',
                 backgroundColor: '#52aeca', 
-
             },
             backgroundColor: '#52aeca', 
             color: 'rgba(28, 65, 68, 0.904)', 
-            width:'300px', 
+            width:'250px', 
             marginTop:'10px',
-            marginLeft:'100px',
+            marginLeft:'80px',
             fontWeight:'bold'
         },
         formButtonMobile: {
@@ -108,8 +107,8 @@ const Login = props => {
             backgroundColor: '#1b6838 !important', 
             color: '#102c1b', 
             margin:'20px 0', 
-            width:'300px',
-            marginLeft:'100px',
+            width:'250px',
+            marginLeft:'80px',
             fontWeight:'bold'
         },
         regButtonMobile: {
@@ -153,7 +152,7 @@ const Login = props => {
                     <FormControl style={isDesktopOrLaptop? authFormStyle:authFormStyleMobile}>
                         <FormLabel></FormLabel>
                             <TextField id="outlined-basic" size={isTabletOrMobile? 'small':'medium'} inputProps={{style: {color:'white'}}} input InputLabelProps={{style:{color:'white'}}} label="Username" variant="outlined" color="primary" className={isTabletOrMobile? classes.inputStyleMobile:classes.inputStyle}/>
-                            <TextField 
+                            <TextField
                                 id="outlined-basic" size={isTabletOrMobile? 'small':'medium'} 
                                 type={values.showPassword?'text':'password'} 
                                 InputProps={{

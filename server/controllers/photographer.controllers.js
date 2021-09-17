@@ -1,6 +1,6 @@
 const {Photo} = require('../models/photographer.models')
 const fs = require('fs')
-const { db } = require('../../../3. MERN/assignments/week9/day3/team-manager/server/models/players.models')
+// const { db } = require('../../../3. MERN/assignments/week9/day3/team-manager/server/models/players.models')
 
 // create photos for gallery
 module.exports.uploadPhotos = (req,res) => {
@@ -9,6 +9,36 @@ module.exports.uploadPhotos = (req,res) => {
     // creating paths for uploaded images and save in reqFiles[]
     for(var i =0; i<req.files.length; i++){
         reqFiles.push(url + '/public/' + req.files[i].filename)
+    }
+    // if there is prev images, save them in prevCollection and concat reqFiles[]
+    // console.log(req.body)
+    if(req.body.prevCollection){
+        let collection = []
+        // if prevCollection is array:
+        if(Array.isArray(req.body.prevCollection)){
+            collection = req.body.prevCollection
+        }
+        // else: push it to prevCollection
+        else{
+            collection.push(req.body.prevCollection)
+        }
+        // console.log("reqFiles:")
+        // console.log(reqFiles)
+        console.log("Collection:")
+        console.log(collection)
+        
+        if(reqFiles.length>0){
+            for(let i=0; i<reqFiles.length;i++){
+                collection.push(reqFiles[i])
+                console.log("we have prevCollection")
+            }
+        }
+        // findoneAndUpdate
+        Photo.findOneAndUpdate({albumName: 'gallery'},
+        {imgCollection: collection}
+        )
+        .then(result => res.json({gallery: result}))
+        .catch(err => res.json({error:err}))
     }
     if(req.body.deletedFiles){
         let deletedFiles = []
@@ -29,49 +59,6 @@ module.exports.uploadPhotos = (req,res) => {
                 if(err) console.log(err);
             })
         }
-    }
-    // if there is prev images, save them in prevCollection and concat reqFiles[]
-    // console.log(req.body)
-    
-    if(req.body.prevCollection){
-        console.log("req.body.prevCollection")
-        let dbCollection = []
-        Photo.find({albumName:'gallery'})
-            .then(result =>  {
-                // console.log(result[0].imgCollection)
-                console.log("dbCollection:")
-                dbCollection = [...result[0].imgCollection]
-                console.log(dbCollection)
-            })
-            .catch(err => console.log(err))
-
-        let prevCollection = []
-        // if prevCollection is array:
-        if(Array.isArray(req.body.prevCollection)){
-            prevCollection = req.body.prevCollection
-        }
-        // else: push it to prevCollection
-        else{
-            prevCollection.push(req.body.prevCollection)
-        }
-        // console.log("reqFiles:")
-        // console.log(reqFiles)
-        console.log("prevCollection:")
-        console.log(prevCollection)
-
-        
-        if(reqFiles.length>0){
-            for(let i=0; i<reqFiles.length;i++){
-                prevCollection.push(reqFiles[i])
-                console.log("we have prevCollection")
-            }
-        }
-        // findoneAndUpdate
-        Photo.findOneAndUpdate({albumName: 'gallery'},
-        {imgCollection: prevCollection}
-        )
-        .then(result => res.json({gallery: result}))
-        .catch(err => res.json({error:err}))
     }
     else {
 
@@ -178,7 +165,8 @@ module.exports.deletePhotosByAlbumName = (req,res) => {
                     console.log(tmpFile.split("http://localhost:8000/public/")[1])
                     let path = tmpFile.split("http://localhost:8000/public/")[1]
                     fs.unlink("./public/"+path, err=>{
-                        if(err) console.log(err);
+                        if(err) throw err
+                        console.log(err);
                     })
                 }
             }

@@ -102,6 +102,7 @@ const GalleryForm = props => {
     useEffect(()=>{
         if(galleryArray && galleryArray.length>0){
             setDisplayGallery(galleryArray)
+            console.log(displayGallery)
             setFileList(galleryArray)
         }
     }, [galleryArray])
@@ -131,20 +132,24 @@ const GalleryForm = props => {
         // fileList is like username and pswd on change in previous projects
         // mainly for submitting/uploading
         await setFileList(tmpCopy)
+        console.log("fileList in imageHandle: "+fileList)
         //2: then transform tmpArr content to handle preview 
         // this one is for displaying
         newPhotos = Array.from(newPhotos).map(file=> {
             return URL.createObjectURL(file)
         })
         let prevArr = []
-        console.log("displayGallery:")
-        console.log(displayGallery)
+
         if(displayGallery && displayGallery.length > 0 && Array.isArray(displayGallery)){
             prevArr = [...displayGallery, ...newPhotos]
         }else {
             prevArr = [...newPhotos]
         }
         await setDisplayGallery(prevArr)
+        // console.log("displayGallery:")
+        // console.log(displayGallery)
+        // console.log("newPhotos: ")
+        // console.log(newPhotos)
     }
     // clearing storage on unmount
     useEffect(()=>{
@@ -160,41 +165,56 @@ const GalleryForm = props => {
         e.preventDefault()
         console.log("fileList[0]")
         console.log(fileList[0])
-        if(!fileList[0] && deletedFiles){
-            let tmp = [""]
-            setFileList(tmp)
-        }
+        // if(!fileList[0] && deletedFiles){
+        //     console.log("triggered...")
+        //     let tmp = [""]
+        //     setFileList(tmp)
+        // }
         if(fileList[0]){
-            let formData = new FormData()
-            console.log("GalleryForm.jsx fileList from handleUpload():")
-            console.log(fileList)
-            fileList.map((file,idx)=>{
-                console.log("fileList[0]")
-                console.log(fileList[0])
-                if(typeof(file)=='string'){
-                    console.log('file[0]')
-                    console.log(file[0])
-                    formData.append('prevCollection', file)
-                } else {
-                    formData.append('imgCollection', file)
-                }
-            })
-            console.log("files to be deleted from db")
-            console.log(deletedFiles)
-            deletedFiles.map(file => {
-                formData.append('deletedFiles', file)
-            })
-            formData.append('albumName', "gallery")
-            // console.log(formData.getAll('albumName'))
-            console.log("files copied into formData from fileList for uploading:")
-            console.log(formData.getAll('imgCollection'))
-            await axios.post('http://localhost:8000/api/photos/upload', formData)
-                .then(result => {
-                    console.log(result.data)
-                    window.location.reload()
+            if(galleryArray == displayGallery){
+                console.log("handleUpload")
+                console.log("galleryArray")
+                console.log(galleryArray)
+                console.log("fileList")
+                console.log(fileList)
+                console.log("already saved..")
+                alert("Already saved..")
+            }
+            else {
+                let formData = new FormData()
+                console.log("fileList from handleUpload():")
+                console.log(fileList)
+                fileList.map((file,idx)=>{
+                    console.log("typeof(file):")
+                    console.log(typeof(file))
+                    if(typeof(file)=='string'){
+                        formData.append('prevCollection', file)
+                    } else {
+                        formData.append('imgCollection', file)
+                    }
                 })
-                .catch(err => console.log(err))
+                console.log("DisplayGallery:")
+                console.log(displayGallery)
+                console.log("deletedFiles:")
+                console.log(deletedFiles)
+                deletedFiles.map(file => {
+                    formData.append('deletedFiles', file)
+                    console.log("file:")
+                    console.log(file)
+                })
+                formData.append('albumName', "gallery")
+                // console.log(formData.getAll('albumName'))
+                console.log("files copied into formData from fileList for uploading:")
+                console.log(formData.getAll('imgCollection'))
+                await axios.post('http://localhost:8000/api/photos/upload', formData)
+                    .then(result => {
+                        console.log(result.data)
+                        window.location.reload()
+                    })
+                    .catch(err => console.log(err))
+            }
         } 
+        // triggered when Delete button is clicked
         else if(!fileList[0] && deletedFiles){
             deleteGallery()
         }
@@ -209,24 +229,11 @@ const GalleryForm = props => {
         console.log("poping from deletedFiles in handleClose")
         console.log(deletedFiles)
     }
-    const handlePreviewClick = async (e, key,photo)=> {
+    const handlePreviewClick = (e, key,photo)=> {
         // console.log(fileList.le)
+        console.log(key)
         if(fileList.length > 1){
-            await setPreviewID(key)
-            console.log("deletedFiles now:")
-            if(deletedFiles && deletedFiles.length >0 && Array.isArray(deletedFiles)){
-                let tmpArr = deletedFiles
-                tmpArr.push(displayGallery[key])
-                await setDeletedFiles(tmpArr)
-            }
-            else{
-                let tmpArr = []
-                tmpArr.push(displayGallery[key])
-                await setDeletedFiles(tmpArr)
-            }
-            console.log("adding photo to deletedFiles in handlePreviewClick")
-            console.log(deletedFiles)
-            console.log(key)
+            setPreviewID(key)
             setOpenDialog(true)
         } else {
             alert("click Delete button ")
@@ -236,27 +243,39 @@ const GalleryForm = props => {
     // deletes one picture from DisplayGallery and FileList
     const handleDelete = (e,idx)=> {
         console.log(previewID)
-        let tmpArr = fileList
-        // let tmpArr2 = displayGallery
-
-        console.log("fileList")
+        console.log("galleryArray ")
+        console.log(galleryArray)
+        if(deletedFiles && deletedFiles.length >0 && Array.isArray(deletedFiles)){
+            let tmpArr = deletedFiles
+            tmpArr.push(displayGallery[previewID])
+            setDeletedFiles(tmpArr)
+        }
+        else{
+            let tmpArr = []
+            tmpArr.push(displayGallery[previewID])
+            setDeletedFiles(tmpArr)
+        }
+        console.log("handleDelete fileList")
         console.log(fileList)
-        console.log("displayGallery")
-        console.log(displayGallery)
+        console.log("galleryArray ")
+        console.log(galleryArray)
 
-        tmpArr.splice(previewID, 1)
-        // tmpArr2.splice(previewID, 1)
-        console.log("previewID")
-        console.log(previewID)
-        console.log("new fileList")
-        console.log(tmpArr)
-        console.log("new displayGallery")
-        console.log(tmpArr)
+        let tmpArr_ = [...fileList]
+        let tmpArr2_ = [...displayGallery]
+        console.log("previewID "+previewID)
+        console.log(tmpArr_)
+        console.log(tmpArr2_)
+        console.log("after splice...")
+        tmpArr_.splice(previewID, 1)
+        tmpArr2_.splice(previewID, 1)
+        console.log(tmpArr_)
+        console.log(tmpArr2_)
         
-        setFileList(tmpArr)
-        setDisplayGallery(tmpArr)
-        console.log("deletedFiles:")
-        console.log(deletedFiles)
+
+        setFileList(tmpArr_)
+        setDisplayGallery(tmpArr2_)
+
+
 
         setOpenDialog(false)
         setPreviewID(null)

@@ -161,7 +161,7 @@ const DrawerBar = props => {
                     </List>
                     <Divider />
                     <List>
-                        <Link to="#" style={{textDecoration:'none'}}>
+                        <Link to="contact" style={{textDecoration:'none'}}>
                             <ListItem button className={classes.drawerButtons}>
                                 <ListItemIcon> 
                                     <MailIcon />
