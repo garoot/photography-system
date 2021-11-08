@@ -149,7 +149,7 @@ const DrawerBar = props => {
                                 <ListItemText primary="My Photos"/>
                             </ListItem>
                         </Link>
-                        <Link to="#" style={{textDecoration:'none'}}>
+                        <Link to="/booking" style={{textDecoration:'none'}}>
                             <ListItem button className={classes.drawerButtons}>
                                 <ListItemIcon> 
                                     <EventAvailableIcon />

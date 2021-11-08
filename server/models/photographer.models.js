@@ -14,6 +14,7 @@ const PhotoSchema = new mongoose.Schema({
         required: [true, 'Album name is required'],
         unique: [true, 'this name exists']
     },
+    // timestamps: created date, collection: 
 }, {timestamps:true, collection:'photos'}
 )
 

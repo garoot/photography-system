@@ -12,11 +12,13 @@ app.use(express.json(), express.urlencoded({extended: false}) )
 
 
 
-const api = require('./routes/photographer.routes')
+const photo_api = require('./routes/photographer.routes')
+const booking_api = require('./routes/booking.routes')
 
 app.use('/public/', express.static('public'))
-// if starts with /api go to api: photographer.routes
-app.use('/api/photos', api)
+// if starts with /api/photos go to api: photographer.routes
+app.use('/api/photos', photo_api)
+app.use('/bookings', booking_api)
 
 const port = process.env.PORT || 8000
 app.listen(port, ()=> {

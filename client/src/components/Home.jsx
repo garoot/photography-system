@@ -7,6 +7,7 @@ import LandingPage from './LandingPage';
 import Gallery from './Gallery';
 import ContactUs from './ContactUs';
 import Footer from './Footer';
+import Booking from './Booking';
 import { useMediaQuery } from 'react-responsive'
 import PhotoManagement from './PhotoManagement'
 import axios from 'axios';
@@ -79,6 +80,10 @@ const Home = props => {
 
                 <ContactUs 
                     path="/contact"
+                />
+
+                <Booking 
+                    path="/booking"
                 />
 
             </Router>            

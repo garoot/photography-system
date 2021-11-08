@@ -5,7 +5,6 @@ let express = require('express'),
 const {v4: uuidv4} = require('uuid')
 const photoControllers = require('../controllers/photographer.controllers')
 
-
 const DIR = './public'
 
 const storage = multer.diskStorage({
@@ -53,5 +52,6 @@ router.get("/:id", photoControllers.findUserPhotos)
 router.delete('/delete/:id', photoControllers.deleteUserPhotos)
 // delete photo by albumName
 router.delete('/delete/album/:albumName', photoControllers.deletePhotosByAlbumName)
+
 
 module.exports = router
