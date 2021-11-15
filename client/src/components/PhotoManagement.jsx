@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import Box from '@material-ui/core/Box'
+import Box from '@mui/material/Box'
 import GalleryForm from './GalleryForm';
 import {Router} from '@reach/router'
 import axios from 'axios';

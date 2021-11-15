@@ -4,6 +4,8 @@ let express = require('express'),
 const bookingControllers = require('../controllers/booking.controllers')
 
 // gets all bookings
-router.get("/", bookingControllers.getAllBookings)
+router.get('/get', bookingControllers.getAllBookings)
+router.post('/create', bookingControllers.createBooking)
+
 
 module.exports = router

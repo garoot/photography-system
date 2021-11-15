@@ -1,13 +1,13 @@
 import React from 'react';
-import Box from '@material-ui/core/Box'
-import Container from '@material-ui/core/Container'
-import Grid from '@material-ui/core/Grid'
-import TextField from '@material-ui/core/TextField'
+import Box from '@mui/material/Box'
+import Container from '@mui/material/Container'
+import Grid from '@mui/material/Grid'
+import TextField from '@mui/material/TextField'
 import {Link} from '@reach/router'
-import FormControl from '@material-ui/core/FormControl'
-import FormHelperText from '@material-ui/core/FormHelperText'
-import FormLabel from '@material-ui/core/FormLabel'
-import Button from '@material-ui/core/Button'
+import FormControl from '@mui/material/FormControl'
+import FormHelperText from '@mui/material/FormHelperText'
+import FormLabel from '@mui/material/FormLabel'
+import Button from '@mui/material/Button'
 import { useMediaQuery } from 'react-responsive'
 
 
@@ -64,7 +64,7 @@ const Footer = props => {
                                     InputLabelProps={{style:{color:'white', fontSize:'7px'}}}
                                     InputProps={{style:{color:'white'}}}
                                 />
-                                <Button variant="contained" color="default" color="secondary" style={{width:'50%'}}>
+                                <Button variant="contained" color="secondary" style={{width:'50%'}}>
                                     Subscribe
                                 </Button>
                                 <FormHelperText></FormHelperText>

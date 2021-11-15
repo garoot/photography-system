@@ -16,6 +16,12 @@ import PhotoAlbumIcon from '@material-ui/icons/PhotoAlbum';
 import EventAvailableIcon from '@material-ui/icons/EventAvailable';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import TheatersIcon from '@material-ui/icons/Theaters';
+import Event from '@material-ui/icons/Event';
+import SdStorage from '@material-ui/icons/SdStorage';
+import ViewCarous from '@material-ui/icons/ViewCarousel';
+import RecentActors from '@material-ui/icons/RecentActors';
+import PhotoLibrary from '@material-ui/icons/PhotoLibrary';
+import Group from '@material-ui/icons/Group';
 
 const drawerWidth = 235;
 const useStyles = makeStyles((theme) => ({
@@ -128,23 +134,47 @@ const DrawerBar = props => {
                         <Link to="/photos/manage" style={{textDecoration:'none'}}>
                             <ListItem button className={classes.drawerButtons}>
                                 <ListItemIcon> 
-                                    <DashboardIcon/>
+                                <DashboardIcon/>
                                 </ListItemIcon>
                                 <ListItemText primary="Manage Photos"/>
-                            </ListItem>
-                        </Link>
-                        <Link to="/gallery" style={{textDecoration:'none'}}>
-                            <ListItem button className={classes.drawerButtons}>
-                                <ListItemIcon> 
-                                    <TheatersIcon/>
-                                </ListItemIcon>
-                                <ListItemText primary="Gallery"/>
                             </ListItem>
                         </Link>
                         <Link to="#" style={{textDecoration:'none'}}>
                             <ListItem button className={classes.drawerButtons}>
                                 <ListItemIcon> 
-                                    <PhotoAlbumIcon />
+                                    <RecentActors/>
+                                </ListItemIcon>
+                                <ListItemText primary="Manage Users"/>
+                            </ListItem>
+                        </Link>
+                        <Link to="#" style={{textDecoration:'none'}}>
+                            <ListItem button className={classes.drawerButtons}>
+                                <ListItemIcon> 
+                                    <Event/>
+                                </ListItemIcon>
+                                <ListItemText primary="Manage Bookings"/>
+                            </ListItem>
+                        </Link>
+                        <Link to="#" style={{textDecoration:'none'}}>
+                            <ListItem button className={classes.drawerButtons}>
+                                <ListItemIcon> 
+                                    <Event/>
+                                </ListItemIcon>
+                                <ListItemText primary="My Bookings"/>
+                            </ListItem>
+                        </Link>
+                        <Link to="/gallery" style={{textDecoration:'none'}}>
+                            <ListItem button className={classes.drawerButtons}>
+                                <ListItemIcon> 
+                                    <PhotoLibrary/>
+                                </ListItemIcon>
+                                <ListItemText primary="Portrait Gallery"/>
+                            </ListItem>
+                        </Link>
+                        <Link to="#" style={{textDecoration:'none'}}>
+                            <ListItem button className={classes.drawerButtons}>
+                                <ListItemIcon> 
+                                    <SdStorage />
                                 </ListItemIcon>
                                 <ListItemText primary="My Photos"/>
                             </ListItem>
@@ -161,7 +191,23 @@ const DrawerBar = props => {
                     </List>
                     <Divider />
                     <List>
-                        <Link to="contact" style={{textDecoration:'none'}}>
+                        <Link to="#" style={{textDecoration:'none'}}>
+                            <ListItem button className={classes.drawerButtons}>
+                                <ListItemIcon> 
+                                    <ViewCarous />
+                                </ListItemIcon>
+                                <ListItemText primary="Pricing"/>
+                            </ListItem>                        
+                        </Link>
+                        <Link to="#" style={{textDecoration:'none'}}>
+                            <ListItem button className={classes.drawerButtons}>
+                                <ListItemIcon> 
+                                    <Group />
+                                </ListItemIcon>
+                                <ListItemText primary="About Us"/>
+                            </ListItem>                        
+                        </Link>
+                        <Link to="#" style={{textDecoration:'none'}}>
                             <ListItem button className={classes.drawerButtons}>
                                 <ListItemIcon> 
                                     <MailIcon />
@@ -169,7 +215,6 @@ const DrawerBar = props => {
                                 <ListItemText primary="Contact Us"/>
                             </ListItem>                        
                         </Link>
-
                     </List>
             </SwipeableDrawer>
             

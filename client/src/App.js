@@ -7,7 +7,7 @@ function App() {
   const isMobile = useMediaQuery({ maxHeight: 900, maxWidth: 550 })
 
   return (
-    <div >
+    <div  >
       <Home/>
       {/* {isMobile? <></>:<Footer/>} */}
       <Footer />

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import Navbar from './Navbar';
 import {Router, Link, navigate} from '@reach/router'
-import Box from '@material-ui/core/Box'
-import Button from '@material-ui/core/Button'
+import Box from '@mui/material/Box'
+import Button from '@mui/material/Button'
 import LandingPage from './LandingPage';
 import Gallery from './Gallery';
 import ContactUs from './ContactUs';
@@ -13,6 +13,14 @@ import PhotoManagement from './PhotoManagement'
 import axios from 'axios';
 
 const Home = props => {
+    const mainStyle = {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#282c34',
+        // minHeight: '100vh',
+        
+    }
     // this is for gallery photos preview - in URL - also for gallery display
     // this must be exactly similar to fileList
     const [galleryArray, setGalleryArray] = useState([])
@@ -59,7 +67,7 @@ const Home = props => {
             .catch(err=> console.log(err))
     }, [])
     return (
-        <div>
+        <div >
             <Navbar />
             <Router>
                 <LandingPage 

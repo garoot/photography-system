@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
-import Box from '@material-ui/core/Box'
+import Box from '@mui/material/Box'
 import { useState } from 'react';
-import Grid from '@material-ui/core/Grid'
+import Grid from '@mui/material/Grid'
 import Carousel from 'react-material-ui-carousel'
-import { Paper, Button } from '@material-ui/core'
+import { Paper, Button } from '@mui/material'
 import { useMediaQuery } from 'react-responsive'
 
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import {Router, Link, navigate} from '@reach/router'
-import Box from '@material-ui/core/Box'
-import Button from '@material-ui/core/Button'
+import Box from '@mui/material/Box'
+import Button from '@mui/material/Button'
 import { useMediaQuery } from 'react-responsive'
 
 
@@ -53,7 +53,11 @@ const LandingPage = props => {
                 <div style={is4K? backgroundLayerStyle4k: backgroundLayerStyle}>
                 </div>
                 <div style={{margin:'-70px 680px 100px 850px'}}>
-                    <Button variant="contained" color="default" color="primary" style={{backgroundColor: '#412f2b6c',border:'1px solid rgba(92, 64, 60, 0.953)'}} onClick={()=>navigate('/gallery')}>
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        style={{backgroundColor: '#412f2b6c',border:'1px solid rgba(92, 64, 60, 0.953)'}}
+                        onClick={()=>navigate('/gallery')}>
                         Gallery
                     </Button>                    
                 </div>

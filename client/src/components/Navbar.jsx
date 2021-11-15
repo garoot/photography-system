@@ -54,13 +54,13 @@ const Navbar = props => {
         <div>
             <AppBar position="fixed" color="primary">
                 <Toolbar style={navStyle}>
-                    <IconButton             
+                    <IconButton
                         color="inherit"
                         aria-label="open drawer"
                         edge="end"
                         onClick={handleDrawerOpen}
-                        className={clsx(openDrawer)} 
-                    >
+                        className={clsx(openDrawer)}
+                        size="large">
                         <MenuIcon />
                     </IconButton>
                     <Typography variant="h6" onClick={()=> navigate('/')} style={{cursor: 'pointer'}}>
