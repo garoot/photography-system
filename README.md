@@ -51,9 +51,17 @@ to start the project:
 2. in one terminal window CD into MERN-PROJECT/client, and run:
 
 ```terminal
+npm install
+```
+then
+```terminal
 npm run start
 ```
 3. in the other terminal window, CD into MERN-PROJECT/server, and run:
+```bash
+npm install 
+```
+then
 ```bash
 npm run start
 ```
