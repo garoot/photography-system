@@ -1,11 +1,11 @@
 # Photographer Portfolio Website Using ExpressJS and ReactJS
 A minimalist portfolio website for photographers where they can
 - display their work (completed - errors in rendering GalleryForm component)
-- display their pricing/plans (0%)
-- display their contact information (0%)
-- upload clients' photos for them to pick (0%)
-- authentication (50% - Frontend Done)
-- schedule photoshoot sessions (0%)
+- display their pricing/plans 
+- display their contact information 
+- upload clients' photos for them to pick 
+- authentication 
+- schedule photoshoot sessions 
 
 ## dependencies (Frontend)
 ```json
