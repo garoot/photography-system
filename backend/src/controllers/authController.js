@@ -16,15 +16,12 @@ exports.signup = async (req, res) => {
             return res.status(409).send('Email already in use');
         }
         
-        // Hash the password
-        const hashedPassword = await bcrypt.hash(password, 12);
-        
         // Create a new user
         const user = new User({
             name,
             email,
             phone,
-            password: hashedPassword,
+            password,
             role
         });
         
@@ -56,29 +53,47 @@ exports.signup = async (req, res) => {
     
 };
 
-
 exports.login = async (req, res) => {
     try {
         const { email, password } = req.body;
         const user = await User.findOne({ email });
 
         if (!user) {
-            return res.status(401).send('Invalid credentials');
+            console.log('Email not found');
+            return res.status(401).send('Email not found');
         }
 
         const isMatch = await user.comparePassword(password);
+        const hashed_test = bcrypt.hash
 
         if (!isMatch) {
+            console.log('Password does not match');
             return res.status(401).send('Invalid credentials');
         }
 
         const token = generateToken(user);
+        console.log('Login successful, token generated');
         res.status(200).json({
             message: 'Logged in successfully!',
-            user,
+            user: {
+                id: user._id,
+                name: user.name,
+                email: user.email,
+                role: user.role
+            },
             token,
         });
     } catch (error) {
+        console.error('Error during login:', error);
         res.status(500).send('Server error');
     }
+};
+
+
+const generateToken = (user) => {
+    return jwt.sign(
+        { userId: user._id, email: user.email, role: user.role },
+        process.env.JWT_SECRET,
+        { expiresIn: '1h' }
+        );
 };
