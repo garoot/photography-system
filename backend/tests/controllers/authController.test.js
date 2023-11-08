@@ -88,7 +88,7 @@ describe('AuthController - Login', () => {
         jwt.sign.mockReturnValue(mockToken);
     
         await login(mockReq, mockRes, mockNext);
-    
+
         expect(mockRes.status).toHaveBeenCalledWith(200);
         expect(mockRes.json).toHaveBeenCalledWith({
             message: 'Logged in successfully!',
@@ -141,6 +141,5 @@ describe('AuthController - Login', () => {
         // Clear all mocks after each test
         jest.clearAllMocks();
     });
-
     // Additional tests can be added to cover other scenarios, such as token generation errors, etc.
 });
