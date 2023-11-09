@@ -5,11 +5,14 @@ const mongoose = require('mongoose');
 const clientRoutes = require('./routes/clientRoutes');
 const authRoutes = require('./routes/authRoutes');
 const authenticateJWT = require('./middleware/authenticateJWT');
+const protectedRoutes = require('./routes/protectedRoutes'); // make sure the path is correct
+
 // import other routes
 const app = express();
 
 app.use(express.json()); // For parsing application/json
 app.use('/clients', clientRoutes);
+
 // Use other routes
 
 // Connect to MongoDB
@@ -22,8 +25,7 @@ mongoose.connect('mongodb://0.0.0.0/photography-db')
 app.use('/api/auth', authRoutes);
 
 // Protected routes
-app.use('/api', authenticateJWT, require('./routes/protectedRoutes'));
-
+app.use('/api', authenticateJWT, protectedRoutes);
 
 app.listen(process.env.PORT, () => {
     console.log(`Server is running on port ${process.env.PORT}`);
