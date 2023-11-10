@@ -1,15 +1,29 @@
-const PortfolioItem = require('../models/portfolioItem'); // Update the path to your model
+const PortfolioItem = require('../models/portfolioItem');
+const fs = require('fs');
+
+// Helper function to delete a file
+const deleteFile = (filePath) => {
+    fs.unlink(filePath, (err) => {
+        if (err) {
+            console.error("Failed to delete file:", err);
+        }
+    });
+};
 
 // Controller to handle Create operation
 exports.createPortfolioItem = async (req, res) => {
     try {
-        const newItem = new PortfolioItem(req.body);
-        const savedItem = await newItem.save();
-        // temporarily
-        res.status(201).json({message: 'createPortfolioItem(): success'});
+        let newItemData = {
+            ...req.body,
+            url: req.file ? req.file.path : req.body.url // Use uploaded file path or URL from body
+        };
 
-        // res.status(201).json(savedItem);
+        const newItem = new PortfolioItem(newItemData);
+        await newItem.save();
+        res.status(201).json(newItem);
     } catch (error) {
+        // Delete the uploaded file if save fails
+        if (req.file) deleteFile(req.file.path);
         res.status(400).json({ message: error.message });
     }
 };
@@ -18,10 +32,8 @@ exports.createPortfolioItem = async (req, res) => {
 exports.getPortfolioItems = async (req, res) => {
     try {
         const items = await PortfolioItem.find();
-        // temporarily
-        res.status(201).json({message: 'getPortfolioItems(): success'});
 
-        // res.json(items);
+        res.json(items);
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
@@ -32,10 +44,8 @@ exports.getPortfolioItem = async (req, res) => {
     try {
         const item = await PortfolioItem.findById(req.params.id);
         if (!item) return res.status(404).json({ message: 'Not found' });
-        // temporarily
-        res.status(201).json({message: 'getPortfolioItem(): success'});
 
-        // res.json(item);
+        res.json(item);
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
@@ -44,13 +54,20 @@ exports.getPortfolioItem = async (req, res) => {
 // Controller to handle Update operation
 exports.updatePortfolioItem = async (req, res) => {
     try {
-        const updatedItem = await PortfolioItem.findByIdAndUpdate(req.params.id, req.body, { new: true });
-        if (!updatedItem) return res.status(404).json({ message: 'Not found' });
-        // temporarily
-        res.status(201).json({message: 'updatePortfolioItem(): success'});
+        let updateData = req.body;
+        if (req.file) {
+            // If a new file is uploaded, delete the old one and update the URL
+            const oldItem = await PortfolioItem.findById(req.params.id);
+            if (oldItem && oldItem.url) deleteFile(oldItem.url);
+            updateData.url = req.file.path;
+        }
 
-        // res.json(updatedItem);
+        const updatedItem = await PortfolioItem.findByIdAndUpdate(req.params.id, updateData, { new: true });
+        if (!updatedItem) return res.status(404).json({ message: 'Not found' });
+
+        res.json(updatedItem);
     } catch (error) {
+        if (req.file) deleteFile(req.file.path);
         res.status(400).json({ message: error.message });
     }
 };
@@ -58,12 +75,14 @@ exports.updatePortfolioItem = async (req, res) => {
 // Controller to handle Delete operation
 exports.deletePortfolioItem = async (req, res) => {
     try {
-        const deletedItem = await PortfolioItem.findByIdAndDelete(req.params.id);
-        if (!deletedItem) return res.status(404).json({ message: 'Not found' });
-        // temporarily
-        res.status(201).json({message: 'deletePortfolioItem(): success'});
+        const item = await PortfolioItem.findById(req.params.id);
+        if (item && item.url) {
+            // Delete the associated file
+            deleteFile(item.url);
+        }
 
-        // res.json({ message: 'Item deleted' });
+        await PortfolioItem.findByIdAndDelete(req.params.id);
+        res.json({ message: 'Item deleted' });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }

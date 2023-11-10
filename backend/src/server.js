@@ -6,12 +6,16 @@ const clientRoutes = require('./routes/clientRoutes');
 const authRoutes = require('./routes/authRoutes');
 const authenticateJWT = require('./middleware/authenticateJWT');
 const protectedRoutes = require('./routes/protectedRoutes'); // make sure the path is correct
+const portfolioController = require('./controllers/portfolioController');
+
 
 // import other routes
 const app = express();
 
 app.use(express.json()); // For parsing application/json
 app.use('/clients', clientRoutes);
+app.use(express.static('public'));
+
 
 // Use other routes
 
@@ -23,6 +27,9 @@ mongoose.connect('mongodb://0.0.0.0/photography-db')
 
 // Public routes
 app.use('/api/auth', authRoutes);
+// Public routes for portfolio items
+app.get('/portfolio-items', portfolioController.getPortfolioItems);
+app.get('/portfolio-items/:id', portfolioController.getPortfolioItem);
 
 // Protected routes
 app.use('/api', authenticateJWT, protectedRoutes);
