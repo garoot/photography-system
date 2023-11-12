@@ -1,0 +1,13 @@
+.navbar {
+    width: 100%;
+    position: fixed;
+    top: 0;
+    background-color: transparent;
+    transition: background-color 0.3s;
+    /* Other styles as needed */
+}
+
+.navbar.scrolled {
+background-color: #ffffff; /* Example color when navbar is scrolled */
+/* Other styles for scrolled state */
+}

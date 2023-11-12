@@ -1,0 +1,14 @@
+.photo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 10px;
+    padding: 20px;
+    /* Other styles as needed */
+}
+
+.photo-item img {
+width: 100%;
+height: auto;
+display: block;
+object-fit: cover; /* To keep aspect ratio without stretching */
+}
