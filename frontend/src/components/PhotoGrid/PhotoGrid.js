@@ -1,5 +1,5 @@
 import React from 'react';
-import { useEffect, useLayoutEffect, useRef  } from 'react';
+import { useEffect, useRef  } from 'react';
 import './PhotoGrid.css';
 
 function PhotoGrid({ photos }) {
@@ -11,45 +11,69 @@ function PhotoGrid({ photos }) {
     photos.forEach((photo, index) => {
     columns[index % numColumns].push(photo);
     });
+    useEffect(() => {
+        // Select all columns
+        const columns = document.querySelectorAll('.photo-column');
+        // console.log(columns);
+    
+        columns.forEach((column, index) => {
+            column.classList.add(index % 2 === 0 ? 'moveUp' : 'moveDown');
+        });
+    
+        // Remove the initial animation class after it ends
+        const handleAnimationEnd = (e) => {
+            e.target.classList.remove('moveUp', 'moveDown');
+        };
+        
+        columns.forEach(column => {
+            column.addEventListener('animationend', handleAnimationEnd);
+        });
+        
+        // Cleanup
+        return () => {
+            columns.forEach(column => {
+                column.removeEventListener('animationend', handleAnimationEnd);
+            });
+        };
+        
+    }, []);
+    
 
-    // useEffect(() => {
-    //     // Set a timeout to add the fade-in class
-    //     const timer = setTimeout(() => {
-    //         const photoItems = document.querySelectorAll('.photo-item');
-    //         photoItems.forEach(item => {
-    //             item.classList.add('fade-in');
-    //         });
-    //     }, 100); // Adjust this delay as needed
+    useEffect(() => {
+        // Set a timeout to add the fade-in class
+        const timer = setTimeout(() => {
+            const photoItems = document.querySelectorAll('.photo-item');
+            photoItems.forEach(item => {
+                item.classList.add('fade-in');
+            });
+        }, 100); // Adjust this delay as needed
 
-    //     // Cleanup the timeout if the component unmounts
-    //     return () => clearTimeout(timer);
-    // }, []);
+        // Cleanup the timeout if the component unmounts
+        return () => clearTimeout(timer);
+    }, []);
 
     const gridRef = useRef(null);
 
-    useEffect(() => {
-        const handleScroll = () => {
-            console.log('Scroll event triggered'); // Add this line
-            const { current } = gridRef;
-            if (current) {
-                const columnElements = current.getElementsByClassName('photo-column');
-                for (let i = 0; i < columnElements.length; i++) {
-                const offset = (window.scrollY / 10) * (i % 2 === 0 ? -1 : 1);
-                columnElements[i].style.transform = `translateY(${offset}px)`;
-                }
-            }
-        };
-        console.log('Adding scroll event listener'); // Add this line
-
-        window.addEventListener('scroll', handleScroll);
+    const handleScroll = () => {
+        console.log("scrolling...")
+        const columns = gridRef.current.children;
+        for (let i = 0; i < columns.length; i++) {
+            const translateY = window.scrollY * 0.1 * (i % 2 === 0 ? 1 : -1);
+            columns[i].style.transform = `translateY(${translateY}px)`;
+        }
+    };
     
-        return () => {
-            console.log('Removing scroll event listener'); // Add this line
+    useEffect(() => {
 
+        // Add the scroll event listener
+        window.addEventListener('scroll', handleScroll);
+
+        // Clean up the scroll event listener when the component unmounts
+        return () => {
             window.removeEventListener('scroll', handleScroll);
         };
     }, []);
-        
+
 
     return (
     <div ref={gridRef} className="photo-grid">

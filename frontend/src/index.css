@@ -7,14 +7,6 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-html, body {
-  height: 100%; /* Minimum height for the body */
-  margin: 0; /* Reset default margin */
-  padding: 0; /* Reset default padding */
-  overflow: auto; /* Enable scrolling for the entire page */
-
-}
-
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',

@@ -10,7 +10,7 @@
     break-inside: avoid-column; /* Prevents items from splitting across columns */
     margin-bottom: 10px; /* This sets the gap between items within the same column */
     width: 100%;
-    /* opacity: 0;  */
+    opacity: 0; 
     transition: opacity 1s ease-in-out; /* Transition effect for the fade-in */
 }
 
@@ -27,13 +27,16 @@
 
 @keyframes moveUp {
     0% { transform: translateY(100px); }
-    100% { transform: translateY(0); }
+    100% { transform: translateY(0px); } /* Adjusted to end at original position */
 }
 
 @keyframes moveDown {
     0% { transform: translateY(-100px); }
-    100% { transform: translateY(0); }
+    100% { transform: translateY(0px); } /* Kept at original position */
 }
+
+
+
 
 .photo-grid {
     display: flex;
@@ -45,9 +48,7 @@
     animation-timing-function: cubic-bezier(0.0, 0.0, 0.2, 1);
     animation-fill-mode: forwards;
     will-change: transform;
-    transform: translateY(-100vh); /* Move the columns above the viewport */
 }
-
 
 .moveUp {
     animation-name: moveUp;
