@@ -4,6 +4,7 @@
     padding: 20px; /* Adjust the padding as needed */
     margin: 0;
     padding: 0;
+    position: relative;
 }
 
 .photo-item {
@@ -16,8 +17,11 @@
 
 /* Class to trigger the fade-in */
 .fade-in {
-    opacity: 1; /* Fully visible */
+    opacity: 1 !important;
+    transition: opacity 1.5s ease-in-out !important;
 }
+
+
 
 .photo-item img {
     width: 100%;
@@ -26,7 +30,7 @@
 }
 
 @keyframes moveUp {
-    0% { transform: translateY(100px); }
+    0% { transform: translateY(-50px); }
     100% { transform: translateY(0px); } /* Adjusted to end at original position */
 }
 
@@ -34,8 +38,6 @@
     0% { transform: translateY(-100px); }
     100% { transform: translateY(0px); } /* Kept at original position */
 }
-
-
 
 
 .photo-grid {
@@ -68,4 +70,43 @@
     height: auto;
     display: block;
     object-fit: cover;
+}
+
+
+/* Container for the header and button */
+.header-container {
+    /* ... other styles ... */
+    position: absolute;
+    top: 50%;  
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    opacity: 0; /* Start with header invisible */
+    transition: opacity 1.5s ease-in-out;
+    z-index: 1000; /* Higher than anything else within the photo-grid */
+}
+
+
+/* Styling for the header */
+.header-title {
+    font-size: 3em; /* Adjust the size as you like */
+    color: #fff; /* Adjust the text color as needed */
+    margin-bottom: 0.5em; /* Space between the header and button */
+}
+
+/* Styling for the button */
+.learn-more-btn {
+    display: inline-block; /* Allows margin and padding to be applied */
+    padding: 10px 20px; /* Adjust the padding as needed */
+    background-color: #000; /* Button background color */
+    color: #fff; /* Button text color */
+    text-decoration: none; /* Remove underline from links */
+    font-weight: bold; /* Make the text bold */
+    border-radius: 5px; /* Rounded corners */
+    transition: background-color 0.3s ease; /* Smooth background color transition */
+}
+
+/* Hover effect for the button */
+.learn-more-btn:hover {
+    background-color: #555; /* Darken button on hover */
 }
