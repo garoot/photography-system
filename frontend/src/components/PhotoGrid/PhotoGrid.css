@@ -1,14 +1,70 @@
 .photo-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 10px;
-    padding: 20px;
-    /* Other styles as needed */
+    column-count: 6; /* Adjust the number of columns as needed */
+    column-gap: 10px; /* This sets the gap between columns */
+    padding: 20px; /* Adjust the padding as needed */
+    margin: 0;
+    padding: 0;
+}
+
+.photo-item {
+    break-inside: avoid-column; /* Prevents items from splitting across columns */
+    margin-bottom: 10px; /* This sets the gap between items within the same column */
+    width: 100%;
+    /* opacity: 0;  */
+    transition: opacity 1s ease-in-out; /* Transition effect for the fade-in */
+}
+
+/* Class to trigger the fade-in */
+.fade-in {
+    opacity: 1; /* Fully visible */
 }
 
 .photo-item img {
-width: 100%;
-height: auto;
-display: block;
-object-fit: cover; /* To keep aspect ratio without stretching */
+    width: 100%;
+    height: auto; /* Retains the original aspect ratio */
+    display: block; /* Removes extra space below the image */
+}
+
+@keyframes moveUp {
+    0% { transform: translateY(100px); }
+    100% { transform: translateY(0); }
+}
+
+@keyframes moveDown {
+    0% { transform: translateY(-100px); }
+    100% { transform: translateY(0); }
+}
+
+.photo-grid {
+    display: flex;
+    justify-content: center;
+}
+
+.photo-column {
+    animation-duration: 1.5s;
+    animation-timing-function: cubic-bezier(0.0, 0.0, 0.2, 1);
+    animation-fill-mode: forwards;
+    will-change: transform;
+    transform: translateY(-100vh); /* Move the columns above the viewport */
+}
+
+
+.moveUp {
+    animation-name: moveUp;
+}
+
+.moveDown {
+    animation-name: moveDown;
+}
+
+.photo-item {
+    margin-bottom: 10px;
+    break-inside: avoid;
+}
+
+.photo-item img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
 }
