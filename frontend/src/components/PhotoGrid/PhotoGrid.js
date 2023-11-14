@@ -5,18 +5,48 @@ import './PhotoGrid.css';
 function PhotoGrid({ photos }) {
   // Determine the number of columns based on the window width or a fixed number
     const numColumns = 6; // Or calculate based on window width
+    const [shuffledPhotos, setShuffledPhotos] = useState([]);
+
+    useEffect(() => {
+        // Shuffle photos and then set state
+        const shuffle = (array) => {
+        let currentIndex = array.length, randomIndex;
+
+        // While there remain elements to shuffle...
+        while (currentIndex !== 0) {
+
+            // Pick a remaining element...
+            randomIndex = Math.floor(Math.random() * currentIndex);
+            currentIndex--;
+
+            // And swap it with the current element.
+            [array[currentIndex], array[randomIndex]] = [
+            array[randomIndex], array[currentIndex]];
+        }
+
+        return array;
+        };
+
+        setShuffledPhotos(shuffle([...photos]));
+    }, [photos]); // This will only run when the 'photos' prop changes
+
     const columns = Array.from({ length: numColumns }, () => []);
 
-    // Distribute photos into columns
-    photos.forEach((photo, index) => {
-    columns[index % numColumns].push(photo);
+    shuffledPhotos.forEach((photo, index) => {
+        columns[index % numColumns].push(photo);
     });
+
+    // // Distribute photos into columns
+    // photos.forEach((photo, index) => {
+    // columns[index % numColumns].push(photo);
+    // });
 
     const [showHeader, setShowHeader] = useState(false);
     const gridRef = useRef(null);
 
 
     useEffect(() => {
+        
         const columns = document.querySelectorAll('.photo-column');
         if(window.scrollY === 0){
             columns.forEach((column, index) => {
