@@ -29,15 +29,41 @@
     display: block; /* Removes extra space below the image */
 }
 
-@keyframes moveUp {
-    0% { transform: translateY(-50px); }
+/* @keyframes moveUp {
+    0% { transform: translateY(0px); }
     100% { transform: translateY(0px); } 
 }
 
 @keyframes moveDown {
+    0% { transform: translateY(0px); }
+    100% { transform: translateY(0px); } 
+} */
+/* .moveUp {
+    animation-name: moveUp;
+}
+
+.moveDown {
+    animation-name: moveDown;
+} */
+
+@keyframes initialMoveUp {
+    0% { transform: translateY(-50px); }
+    100% { transform: translateY(0px); } 
+}
+
+@keyframes initialMoveDown {
     0% { transform: translateY(-100px); }
     100% { transform: translateY(0px); } 
 }
+
+.initialMoveUp {
+    animation-name: initialMoveUp;
+}
+
+.initialMoveDown {
+    animation-name: initialMoveDown;
+}
+
 
 
 .photo-grid {
@@ -50,14 +76,6 @@
     animation-timing-function: cubic-bezier(0.0, 0.0, 0.2, 1);
     animation-fill-mode: forwards;
     will-change: transform;
-}
-
-.moveUp {
-    animation-name: moveUp;
-}
-
-.moveDown {
-    animation-name: moveDown;
 }
 
 .photo-item {

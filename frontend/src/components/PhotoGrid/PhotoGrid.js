@@ -13,17 +13,25 @@ function PhotoGrid({ photos }) {
     });
 
     const [showHeader, setShowHeader] = useState(false);
+    const gridRef = useRef(null);
+
 
     useEffect(() => {
         const columns = document.querySelectorAll('.photo-column');
-    
-        columns.forEach((column, index) => {
-            column.classList.add(index % 2 === 0 ? 'moveUp' : 'moveDown');
-        });
+        if(window.scrollY === 0){
+            columns.forEach((column, index) => {
+                column.classList.add(index % 2 === 0 ? 'initialMoveUp' : 'initialMoveDown');
+            });
+        }
+
+        // columns.forEach((column, index) => {
+        //     column.classList.add(index % 2 === 0 ? 'moveUp' : 'moveDown');
+        // });
     
         // This function handles the end of an animation
         const handleAnimationEnd = (e) => {
-            e.target.classList.remove('moveUp', 'moveDown');
+            // e.target.classList.remove('moveUp', 'moveDown');
+            e.target.classList.remove('initialMoveUp', 'initialMoveDown');
     
             // If the last column has finished animating
             if (e.target.classList.contains('photo-column') && e.target.nextElementSibling === null) {
@@ -68,11 +76,6 @@ function PhotoGrid({ photos }) {
         };
     }, []);
     
-    
-    
-
-    const gridRef = useRef(null);
-
     const handleScroll = () => {
         console.log("scrolling...")
         const columns = gridRef.current.children;
@@ -100,7 +103,7 @@ function PhotoGrid({ photos }) {
                 {columns.map((column, columnIndex) => (
                     <div
                         key={columnIndex}
-                        className={`photo-column ${columnIndex % 2 === 0 ? 'moveUp' : 'moveDown'}`}
+                        className={`photo-column`}
                     >
                         {column.map((photo, photoIndex) => (
                         <div key={photoIndex} className="photo-item">
