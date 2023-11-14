@@ -21,6 +21,11 @@
     background-color: rgb(131, 34, 125); 
 } */
 
+/* .navbar-logo,
+.menu-burger {
+    opacity: 1;
+} */
+
 .navbar-content {
     width: 100%; /* Make sure this is set to 100% */
     display: flex;
@@ -29,7 +34,7 @@
 
 .navbar-logo {
     font-size: 20px; /* Adjust size as needed */
-    color: #ffffff !important; /* Adjust color as needed */
+    color: #ffffff; /* Adjust color as needed */
     padding: 15px 0 20px 0;
     
 }
@@ -41,7 +46,21 @@
 
 .menu-burger {
     font-size: 20px; /* Adjust size as needed */
-    color: #ffffff !important; /* Adjust color as needed */
+    color: #ffffff; /* Adjust color as needed */
     cursor: pointer;
     padding: 15px 0 20px 0;
 }
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* .fade-in {
+    animation: fadeIn 1s ease-in-out forwards; 
+} */
+
+/* .fade-in {
+    opacity: 1 !important;
+    transition: opacity 1.5s ease-in-out !important;
+} */

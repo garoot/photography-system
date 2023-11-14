@@ -31,12 +31,12 @@
 
 @keyframes moveUp {
     0% { transform: translateY(-50px); }
-    100% { transform: translateY(0px); } /* Adjusted to end at original position */
+    100% { transform: translateY(0px); } 
 }
 
 @keyframes moveDown {
     0% { transform: translateY(-100px); }
-    100% { transform: translateY(0px); } /* Kept at original position */
+    100% { transform: translateY(0px); } 
 }
 
 
