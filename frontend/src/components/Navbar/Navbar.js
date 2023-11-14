@@ -2,12 +2,34 @@ import React, { useState, useEffect } from 'react';
 import './Navbar.css';
 
 function Navbar() {
-    const [backgroundColor, setBackgroundColor] = useState('rgba(7, 13, 22, 0)');
+    const [backgroundColor, setBackgroundColor] = useState('rgba(7, 13, 22, 0.0)');
     const [isLoaded, setIsLoaded] = useState(false); // State to handle the fade-in
 
     useEffect(() => {
         const handleScroll = () => {
-            const newColor = window.scrollY > 0 ? 'rgba(7, 13, 22, 0.94)' : 'rgba(7, 13, 22, 0)';
+            // const newColor = window.scrollY > 0 ? 'rgba(7, 13, 22, 0.94)' : 'rgba(7, 13, 22, 0.1)';
+            // setBackgroundColor(newColor);
+                // Define the start and end points of the scroll where the change should be complete
+            const startChangePosition = 0; // The scroll position where the change starts
+            const endChangePosition = 300; // The scroll position where the change ends
+
+            // Get the current scroll position
+            const scrollY = window.scrollY;
+
+            // Calculate the opacity based on the scroll position
+            let opacity = 0.1; // Start with the initial opacity
+            if (scrollY > startChangePosition) {
+                // Calculate the scroll distance within the change range
+                const distance = Math.min(scrollY - startChangePosition, endChangePosition - startChangePosition);
+                // Interpolate the opacity based on the scroll distance
+                opacity = 0.1 + (0.84 * (distance / (endChangePosition - startChangePosition)));
+            }
+
+            // Ensure opacity stays within bounds
+            opacity = Math.min(Math.max(opacity, 0.1), 0.94);
+
+            // Set the new background color with the interpolated opacity
+            const newColor = `rgba(7, 13, 22, ${opacity})`;
             setBackgroundColor(newColor);
         };
 
