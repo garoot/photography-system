@@ -77,7 +77,7 @@ function PhotoGrid({ photos }) {
         console.log("scrolling...")
         const columns = gridRef.current.children;
         for (let i = 0; i < columns.length; i++) {
-            const translateY = window.scrollY * 0.1 * (i % 2 === 0 ? 1 : -1);
+            const translateY = window.scrollY * 0.2 * (i % 2 === 0 ? 1 : -1);
             columns[i].style.transform = `translateY(${translateY}px)`;
         }
     };

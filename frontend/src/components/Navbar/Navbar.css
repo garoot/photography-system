@@ -2,12 +2,46 @@
     width: 100%;
     position: fixed;
     top: 0;
-    background-color: transparent;
-    transition: background-color 0.3s;
-    /* Other styles as needed */
+    transition: background-color 0.3s ease-in-out;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1000;
 }
 
-.navbar.scrolled {
-background-color: #ffffff; /* Example color when navbar is scrolled */
-/* Other styles for scrolled state */
+.navbar-logo, .menu-burger {
+    color: #000; /* Or any color you prefer */
+}
+
+
+/* Other styles remain the same */
+
+
+/* .navbar.scrolled {
+    background-color: rgb(131, 34, 125); 
+} */
+
+.navbar-content {
+    width: 100%; /* Make sure this is set to 100% */
+    display: flex;
+    justify-content: space-around; /* Adjust as necessary */
+}
+
+.navbar-logo {
+    font-size: 20px; /* Adjust size as needed */
+    color: #ffffff !important; /* Adjust color as needed */
+    padding: 15px 0 20px 0;
+    
+}
+.navbar-logo img {
+    height: auto; /* Maintain aspect ratio */
+    width: 100px; /* Example size - adjust as necessary */
+    max-height: 100%; /* Ensure it doesn't exceed the navbar height */
+}
+
+.menu-burger {
+    font-size: 20px; /* Adjust size as needed */
+    color: #ffffff !important; /* Adjust color as needed */
+    cursor: pointer;
+    padding: 15px 0 20px 0;
 }

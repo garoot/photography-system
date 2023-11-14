@@ -1,0 +1,18 @@
+/* ServicesSection.module.css */
+.services {
+    position: absolute;
+    top: 700px; /* Adjust as needed to overlap the photo grid */
+    left: 0;
+    right: 0;
+    z-index: 10; /* Ensure this is above the photo grid z-index */
+    display: flex;
+    justify-content: space-around; /* Adjust as needed for your design */
+    padding: 20px;
+    background-color: rgb(239, 239, 239);
+    min-height: 100%;
+}
+
+/* Style for your icons */
+.icon {
+    /* Your icon styles */
+}

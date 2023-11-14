@@ -83,7 +83,7 @@
     text-align: center;
     opacity: 0; /* Start with header invisible */
     transition: opacity 1.5s ease-in-out;
-    z-index: 1000; /* Higher than anything else within the photo-grid */
+    z-index: 500; /* Higher than anything else within the photo-grid */
 }
 
 

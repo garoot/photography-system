@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import './Navbar.css'; // Make sure the path is correct for your project structure
+import './Navbar.css';
 
 function Navbar() {
-    const [isScrolled, setIsScrolled] = useState(false);
+    const [backgroundColor, setBackgroundColor] = useState('rgba(7, 13, 22, 0)'); // Initial color is fully transparent
 
     useEffect(() => {
         const handleScroll = () => {
-            setIsScrolled(window.scrollY > 0);
+            const newColor = window.scrollY > 0 ? 'rgba(7, 13, 22, 1)' : 'rgba(7, 13, 22, 0)'; // Solid color when scrolled
+            setBackgroundColor(newColor);
         };
 
         window.addEventListener('scroll', handleScroll);
@@ -17,8 +18,15 @@ function Navbar() {
     }, []);
 
     return (
-        <nav className={`navbar ${isScrolled ? 'scrolled' : ''}`}>
-        {/* Navbar content here */}
+        <nav className="navbar" style={{ backgroundColor: backgroundColor }}>
+            <div className="navbar-content">
+                <div className="navbar-logo">
+                    <img src="/logo-white@1.5x.png" alt="Malak Photo" />
+                </div>
+                <div className="menu-burger">
+                    <span>Menu</span> {/* Replace with actual burger icon/menu component */}
+                </div>
+            </div>
         </nav>
     );
 }

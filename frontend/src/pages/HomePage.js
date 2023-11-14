@@ -1,6 +1,7 @@
 import React from 'react';
 import Navbar from '../components/Navbar/Navbar';
 import PhotoGrid from '../components/PhotoGrid/PhotoGrid';
+import ServicesSection from '../components/ServicesSection/ServicesSection'; // Add this
 import { useState, useEffect } from 'react';
 
 function HomePage() {
@@ -22,7 +23,7 @@ function HomePage() {
             <Navbar />
             <main>
                 <PhotoGrid photos={photos} />
-                {/* ... other sections of the homepage */}
+                <ServicesSection />
             </main>
             {/* ... potentially a footer */}
         </div>
