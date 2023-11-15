@@ -62,6 +62,7 @@ function PhotoGrid({ photos }) {
 
     const columns = Array.from({ length: numColumns }, () => []);
     shuffledPhotos.forEach((photo, index) => {
+        console.log(photo.url);
         columns[index % numColumns].push(photo);
     });
     // const populatePhotos = () => {

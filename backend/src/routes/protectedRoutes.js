@@ -28,5 +28,7 @@ router.put('/portfolio-items/:id', verifyAndAuthorize, upload.single('file'), po
 // router.get('/portfolio-items', verifyAndAuthorize, portfolioController.getPortfolioItems);
 // router.get('/portfolio-items/:id', verifyAndAuthorize, portfolioController.getPortfolioItem);
 router.delete('/portfolio-items/:id', verifyAndAuthorize, portfolioController.deletePortfolioItem);
+router.delete('/portfolio-items', verifyAndAuthorize, portfolioController.deleteAllPortfolioItems);
+
 
 module.exports = router;

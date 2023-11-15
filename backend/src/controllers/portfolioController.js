@@ -13,20 +13,22 @@ const deleteFile = (filePath) => {
 // Controller to handle Create operation
 exports.createPortfolioItem = async (req, res) => {
     try {
+        let url = req.file ? req.file.path.replace(/\\/g, '/').replace('backend/public', '') : req.body.url;
+
         let newItemData = {
             ...req.body,
-            url: req.file ? req.file.path : req.body.url // Use uploaded file path or URL from body
+            url: url
         };
 
         const newItem = new PortfolioItem(newItemData);
         await newItem.save();
         res.status(201).json(newItem);
     } catch (error) {
-        // Delete the uploaded file if save fails
         if (req.file) deleteFile(req.file.path);
         res.status(400).json({ message: error.message });
     }
 };
+
 
 // Controller to handle Read operation for all items
 exports.getPortfolioItems = async (req, res) => {
@@ -83,6 +85,28 @@ exports.deletePortfolioItem = async (req, res) => {
 
         await PortfolioItem.findByIdAndDelete(req.params.id);
         res.json({ message: 'Item deleted' });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+// Controller to handle Delete operation
+exports.deleteAllPortfolioItems = async (req, res) => {
+    try {
+        // Find all portfolio items
+        const items = await PortfolioItem.find();
+
+        // Iterate over each item and delete associated files if necessary
+        for (const item of items) {
+            if (item.url) {
+                deleteFile(item.url);
+            }
+        }
+
+        // Delete all items from the database
+        await PortfolioItem.deleteMany({});
+
+        res.json({ message: 'All items deleted' });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }

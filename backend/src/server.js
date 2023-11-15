@@ -7,14 +7,22 @@ const authRoutes = require('./routes/authRoutes');
 const authenticateJWT = require('./middleware/authenticateJWT');
 const protectedRoutes = require('./routes/protectedRoutes'); // make sure the path is correct
 const portfolioController = require('./controllers/portfolioController');
+const path = require('path');
+const cors = require('cors');
+
+
 
 
 // import other routes
 const app = express();
+app.use(cors());
+
 
 app.use(express.json()); // For parsing application/json
 app.use('/clients', clientRoutes);
-app.use(express.static('public'));
+// app.use(express.static(path.join(__dirname, '..', 'public')));
+app.use('/public', express.static('public'));
+
 
 
 // Use other routes
