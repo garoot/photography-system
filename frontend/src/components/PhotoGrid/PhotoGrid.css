@@ -1,18 +1,37 @@
 .photo-grid {
-    column-count: 6; /* Adjust the number of columns as needed */
-    column-gap: 10px; /* This sets the gap between columns */
-    padding: 20px; /* Adjust the padding as needed */
-    margin: 0;
-    padding: 0;
-    position: relative;
+    column-gap: 10px; /* Sets the gap between columns */
+    padding: 0px; /* Adjust the padding as needed */
+    margin: -5px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.photo-column {
+    animation-duration: 1.5s;
+    animation-timing-function: cubic-bezier(0.0, 0.0, 0.2, 1);
+    animation-fill-mode: forwards;
+    will-change: transform;
+    flex: 0 0 auto; /* Prevents columns from stretching */
+    width: calc((100% / 6) - 10px); /* Adjust '6' to change the number of columns */
 }
 
 .photo-item {
-    break-inside: avoid-column; /* Prevents items from splitting across columns */
-    margin-bottom: 10px; /* This sets the gap between items within the same column */
-    width: 100%;
-    opacity: 0; 
-    transition: opacity 1s ease-in-out; /* Transition effect for the fade-in */
+    break-inside: avoid-column;
+    margin-bottom: 10px; /* Gap between items within the same column */
+}
+
+.photo-item img {
+    width: 100%; /* Ensures the image fills the column */
+    height: auto;
+    display: block;
+    object-fit: cover;
+}
+
+@media (max-width: 767px) {
+    .photo-column {
+        width: calc((100% / 3) - 10px); /* Adjust '3' for the number of columns on smaller screens */
+    }
 }
 
 /* Class to trigger the fade-in */
@@ -20,31 +39,6 @@
     opacity: 1 !important;
     transition: opacity 1.5s ease-in-out !important;
 }
-
-
-
-.photo-item img {
-    width: 100%;
-    height: auto; /* Retains the original aspect ratio */
-    display: block; /* Removes extra space below the image */
-}
-
-/* @keyframes moveUp {
-    0% { transform: translateY(0px); }
-    100% { transform: translateY(0px); } 
-}
-
-@keyframes moveDown {
-    0% { transform: translateY(0px); }
-    100% { transform: translateY(0px); } 
-} */
-/* .moveUp {
-    animation-name: moveUp;
-}
-
-.moveDown {
-    animation-name: moveDown;
-} */
 
 @keyframes initialMoveUp {
     0% { transform: translateY(-50px); }
@@ -62,32 +56,6 @@
 
 .initialMoveDown {
     animation-name: initialMoveDown;
-}
-
-
-
-.photo-grid {
-    display: flex;
-    justify-content: center;
-}
-
-.photo-column {
-    animation-duration: 1.5s;
-    animation-timing-function: cubic-bezier(0.0, 0.0, 0.2, 1);
-    animation-fill-mode: forwards;
-    will-change: transform;
-}
-
-.photo-item {
-    margin-bottom: 10px;
-    break-inside: avoid;
-}
-
-.photo-item img {
-    width: 100%;
-    height: auto;
-    display: block;
-    object-fit: cover;
 }
 
 
@@ -128,3 +96,4 @@
 .learn-more-btn:hover {
     background-color: #555; /* Darken button on hover */
 }
+

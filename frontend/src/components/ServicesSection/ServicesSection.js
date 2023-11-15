@@ -13,12 +13,12 @@ function ServicesSection() {
                         for (let i = 0; i < serviceItems.length; i++) {
                             setTimeout(() => {
                                 serviceItems[i].classList.add(styles.serviceItemVisible);
-                            }, i * 100);
+                            }, i * 500);
                         }
                     }
                 });
             },
-            { threshold: 0.1 }
+            { threshold: 0.4 }
         );
 
         if (refServices.current) {

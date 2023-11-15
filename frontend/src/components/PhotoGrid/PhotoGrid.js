@@ -3,48 +3,88 @@ import { useEffect, useRef, useState } from 'react';
 import './PhotoGrid.css';
 
 function PhotoGrid({ photos }) {
-  // Determine the number of columns based on the window width or a fixed number
-    const numColumns = 6; // Or calculate based on window width
+    // Set the initial number of columns based on the window width
+    // const initialNumColumns = window.innerWidth >= 768 ? 6 : 3; // Change 768 to your desired breakpoint width
+    const numColumns = 6;
     const [shuffledPhotos, setShuffledPhotos] = useState([]);
 
+    // const getNumColumns = () => window.innerWidth >= 768 ? 6 : 3;
+
+    
     useEffect(() => {
+        console.log("Triggered...1")
         // Shuffle photos and then set state
         const shuffle = (array) => {
-        let currentIndex = array.length, randomIndex;
+            let currentIndex = array.length, randomIndex;
 
-        // While there remain elements to shuffle...
-        while (currentIndex !== 0) {
+            // While there remain elements to shuffle...
+            while (currentIndex !== 0) {
+                // Pick a remaining element...
+                randomIndex = Math.floor(Math.random() * currentIndex);
+                currentIndex--;
+        
+                // And swap it with the current element.
+                [array[currentIndex], array[randomIndex]] = [
+                    array[randomIndex], array[currentIndex]
+                ];
+            }
 
-            // Pick a remaining element...
-            randomIndex = Math.floor(Math.random() * currentIndex);
-            currentIndex--;
-
-            // And swap it with the current element.
-            [array[currentIndex], array[randomIndex]] = [
-            array[randomIndex], array[currentIndex]];
-        }
-
-        return array;
+            return array;
         };
 
         setShuffledPhotos(shuffle([...photos]));
     }, [photos]); // This will only run when the 'photos' prop changes
 
-    const columns = Array.from({ length: numColumns }, () => []);
+    // const handleResize = () => {
+    //     setNumColumns(getNumColumns());
+    // };
 
-    shuffledPhotos.forEach((photo, index) => {
-        columns[index % numColumns].push(photo);
-    });
+    // // Update numColumns on window resize
+    // useEffect(() => {
+    //     console.log("Triggered...2")
+
+    //     // Initial call to handleResize
+    //     handleResize();
+
+    //     // Add a listener for window resize
+    //     window.addEventListener('resize', handleResize);
+
+    //     return () => {
+    //         // Remove the resize event listener when the component unmounts
+    //         window.removeEventListener('resize', handleResize);
+    //     };
+    // }, []);
 
     // // Distribute photos into columns
     // photos.forEach((photo, index) => {
     // columns[index % numColumns].push(photo);
     // });
 
+    const columns = Array.from({ length: numColumns }, () => []);
+    shuffledPhotos.forEach((photo, index) => {
+        columns[index % numColumns].push(photo);
+    });
+    // const populatePhotos = () => {
+    //     shuffledPhotos.forEach((photo, index) => {
+    //         columns[index % numColumns].push(photo);
+    //     });
+    // }
+    // populatePhotos();
+
+    // useEffect(() => {
+    //     populatePhotos();
+    //     console.log("Re-populating...")
+    //     console.log(columns)
+
+    //     return;
+    // }, [numColumns])
+
+
+
     const [showHeader, setShowHeader] = useState(false);
     const gridRef = useRef(null);
 
-
+    // initial animation
     useEffect(() => {
         
         const columns = document.querySelectorAll('.photo-column');
@@ -83,7 +123,7 @@ function PhotoGrid({ photos }) {
     }, []);
     
     
-
+    // fade-in animation for PhotoGrid  
     useEffect(() => {
         // Set a timeout to add the fade-in class to the photo items
         const timerPhotoItems = setTimeout(() => {
@@ -114,7 +154,8 @@ function PhotoGrid({ photos }) {
             columns[i].style.transform = `translateY(${translateY}px)`;
         }
     };
-    
+
+    // scroll animation
     useEffect(() => {
 
         // Add the scroll event listener
@@ -131,18 +172,15 @@ function PhotoGrid({ photos }) {
         <>
             <div ref={gridRef} className="photo-grid">
                 {columns.map((column, columnIndex) => (
-                    <div
-                        key={columnIndex}
-                        className={`photo-column`}
-                    >
+                    <div key={columnIndex} className={`photo-column`}>
                         {column.map((photo, photoIndex) => (
-                        <div key={photoIndex} className="photo-item">
-                            <img 
-                                src={`http://localhost:4000/${photo.url}`} 
-                                alt={photo.title || `Photography ${photoIndex}`} 
-                                loading="eager"
-                            />
-                        </div>
+                            <div key={photoIndex} className="photo-item">
+                                <img 
+                                    src={`http://localhost:4000/${photo.url}`} 
+                                    alt={photo.title || `Photography ${photoIndex}`} 
+                                    loading="eager"
+                                />
+                            </div>
                         ))}
                     </div>
                 ))}
@@ -152,9 +190,7 @@ function PhotoGrid({ photos }) {
                 <h1 className="header-title">Malak Alshahrani</h1>
                 <a href="#learn-more" className="learn-more-btn">Learn More</a>
             </div>
-
         </>
-    
     );
 }
 
