@@ -30,7 +30,7 @@
     object-fit: cover;
 }
 
-@media (max-width: 767px) {
+@media (max-width: 1100px) {
     .photo-column {
         width: calc((100% / 3) - 10px); /* Adjust '3' for the number of columns on smaller screens */
     }
