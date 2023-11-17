@@ -3,6 +3,8 @@ import Navbar from '../components/Navbar/Navbar';
 import PhotoGrid from '../components/PhotoGrid/PhotoGrid';
 import ServicesSection from '../components/ServicesSection/ServicesSection'; // Add this
 import { useState, useEffect } from 'react';
+import Footer from '../components/Footer/Footer';
+import './HomePage.css'
 
 function HomePage() {
     // Fetch photos from your backend and store them in state, or pass them down as props
@@ -19,13 +21,14 @@ function HomePage() {
     }, []);
 
     return (
-        <div>
+        <div className='root'>
             <Navbar />
             <main>
                 <PhotoGrid photos={photos} />
                 <ServicesSection />
             </main>
             {/* ... potentially a footer */}
+            <Footer/>
         </div>
     );
 }

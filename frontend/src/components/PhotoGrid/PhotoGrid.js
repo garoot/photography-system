@@ -42,6 +42,7 @@ function PhotoGrid({ photos }) {
         let numColumns = window.innerWidth <= 400 ? 3 : 6;
         let tempColumns = Array.from({ length: numColumns }, () => []);
 
+        let numPhoto = 0;
         shuffledPhotos.forEach((photo, index) => {
             tempColumns[index % numColumns].push(photo);
         });
@@ -137,6 +138,8 @@ function PhotoGrid({ photos }) {
             columns[i].style.transform = `translateY(${translateY}px)`;
         }
     };
+
+    
 
     // scroll animation
     useEffect(() => {

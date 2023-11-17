@@ -26,7 +26,7 @@ function Navbar() {
             }
 
             // Ensure opacity stays within bounds
-            opacity = Math.min(Math.max(opacity, 0.0), 0.94);
+            opacity = Math.min(Math.max(opacity, 0.0), 1);
 
             // Set the new background color with the interpolated opacity
             const newColor = `rgba(7, 13, 22, ${opacity})`;

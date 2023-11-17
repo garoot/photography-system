@@ -1,0 +1,68 @@
+.footer {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    padding: 20px;
+    background-color: rgb(7, 13, 22);
+    color: white; /* Light text color for contrast */
+    flex-wrap: wrap; /* Ensure the sections can wrap */
+    position: relative;
+    z-index: 1000;
+    margin-top: 1600px;
+}
+
+.footer-section {
+    flex: 1; /* Each section takes equal space */
+    margin: 10px; /* Spacing between sections */
+    min-width: 160px; /* Minimum width for each section to maintain readability */
+}
+
+.footer-section h2 {
+    color: #fff; /* White color for the headings */
+    margin-bottom: 10px;
+}
+
+.footer-section a, .footer-section p {
+    color: #ccc; /* Light grey color for text */
+    text-decoration: none;
+    margin-bottom: 5px;
+    line-height: 1.6; /* Spacing for readability */
+}
+
+.footer-section .newsletter input[type="text"],
+.footer-section .newsletter input[type="email"] {
+    padding: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: calc(100% - 22px); /* Full width minus padding */
+}
+
+.footer-section .newsletter button {
+    padding: 10px;
+    width: 100%;
+    background-color: #f60; /* Example highlight color for the button */
+    border: none;
+    color: white;
+    cursor: pointer;
+}
+
+.footer-bottom {
+    text-align: center;
+    margin-top: 20px;
+    width: 100%; /* Ensure this spans the full width of the footer */
+}
+
+/* Responsive adjustments */
+
+@media (min-width: 450px) {
+    .footer {
+        position: relative;
+        z-index: 2000;
+        margin-top: 1600px;
+    }
+}
+@media (min-width: 768px) {
+    .footer {
+        margin-top: 2500px;
+    }
+}

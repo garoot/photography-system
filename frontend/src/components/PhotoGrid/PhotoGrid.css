@@ -5,6 +5,8 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    position: relative;
+    z-index: 5;
 }
 
 .photo-column {
@@ -12,7 +14,7 @@
     animation-timing-function: cubic-bezier(0.0, 0.0, 0.2, 1);
     animation-fill-mode: forwards;
     will-change: transform;
-    flex: 0 0 auto; /* Prevents columns from stretching */
+    flex: 0 0 auto; 
     width: calc((100% / 6) - 10px); /* Adjust '6' to change the number of columns */
 }
 
@@ -80,6 +82,13 @@
     margin-bottom: 0.5em; /* Space between the header and button */
 }
 
+@media (max-width: 450px) {
+    .header-container{
+        top: 30%;
+    }
+}
+
+
 /* Styling for the button */
 .learn-more-btn {
     display: inline-block; /* Allows margin and padding to be applied */
@@ -91,6 +100,7 @@
     border-radius: 5px; /* Rounded corners */
     transition: background-color 0.3s ease; /* Smooth background color transition */
 }
+
 
 /* Hover effect for the button */
 .learn-more-btn:hover {
