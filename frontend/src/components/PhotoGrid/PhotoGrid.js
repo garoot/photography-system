@@ -5,8 +5,9 @@ import './PhotoGrid.css';
 function PhotoGrid({ photos }) {
     // Set the initial number of columns based on the window width
     // const initialNumColumns = window.innerWidth >= 768 ? 6 : 3; // Change 768 to your desired breakpoint width
-    const numColumns = 6;
     const [shuffledPhotos, setShuffledPhotos] = useState([]);
+    const [columns, setColumns] = useState([]); // New state for columns
+
 
     // const getNumColumns = () => window.innerWidth >= 768 ? 6 : 3;
 
@@ -35,53 +36,40 @@ function PhotoGrid({ photos }) {
         setShuffledPhotos(shuffle([...photos]));
     }, [photos]); // This will only run when the 'photos' prop changes
 
-    // const handleResize = () => {
-    //     setNumColumns(getNumColumns());
-    // };
 
-    // // Update numColumns on window resize
-    // useEffect(() => {
-    //     console.log("Triggered...2")
+    // Function to fill up columns based on screen size
+    const fillupColumns = () => {
+        let numColumns = window.innerWidth <= 400 ? 3 : 6;
+        let tempColumns = Array.from({ length: numColumns }, () => []);
 
-    //     // Initial call to handleResize
-    //     handleResize();
+        shuffledPhotos.forEach((photo, index) => {
+            tempColumns[index % numColumns].push(photo);
+        });
 
-    //     // Add a listener for window resize
-    //     window.addEventListener('resize', handleResize);
+        setColumns(tempColumns); // Update state
+    };
 
-    //     return () => {
-    //         // Remove the resize event listener when the component unmounts
-    //         window.removeEventListener('resize', handleResize);
-    //     };
-    // }, []);
+    // Initial fillup
+    useEffect(() => {
+        fillupColumns();
+    }, [shuffledPhotos]); // Dependency on shuffledPhotos
 
-    // // Distribute photos into columns
-    // photos.forEach((photo, index) => {
-    // columns[index % numColumns].push(photo);
-    // });
+    // Event listener for window resize
+    useEffect(() => {
+        const handleResize = () => {
+            fillupColumns();
+        };
 
-    const columns = Array.from({ length: numColumns }, () => []);
-    shuffledPhotos.forEach((photo, index) => {
-        console.log(photo.url);
-        columns[index % numColumns].push(photo);
-    });
-    // const populatePhotos = () => {
-    //     shuffledPhotos.forEach((photo, index) => {
-    //         columns[index % numColumns].push(photo);
-    //     });
-    // }
-    // populatePhotos();
+        window.addEventListener('resize', handleResize);
 
-    // useEffect(() => {
-    //     populatePhotos();
-    //     console.log("Re-populating...")
-    //     console.log(columns)
-
-    //     return;
-    // }, [numColumns])
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, [shuffledPhotos]); // Dependency on shuffledPhotos
 
 
 
+    
     const [showHeader, setShowHeader] = useState(false);
     const gridRef = useRef(null);
 
@@ -94,11 +82,6 @@ function PhotoGrid({ photos }) {
                 column.classList.add(index % 2 === 0 ? 'initialMoveUp' : 'initialMoveDown');
             });
         }
-
-        // columns.forEach((column, index) => {
-        //     column.classList.add(index % 2 === 0 ? 'moveUp' : 'moveDown');
-        // });
-    
         // This function handles the end of an animation
         const handleAnimationEnd = (e) => {
             // e.target.classList.remove('moveUp', 'moveDown');
@@ -122,7 +105,6 @@ function PhotoGrid({ photos }) {
             });
         };
     }, []);
-    
     
     // fade-in animation for PhotoGrid  
     useEffect(() => {
@@ -167,7 +149,6 @@ function PhotoGrid({ photos }) {
             window.removeEventListener('scroll', handleScroll);
         };
     }, []);
-
 
     return (
         <>
