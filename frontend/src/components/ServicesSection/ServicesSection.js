@@ -4,7 +4,7 @@ import styles from './ServicesSection.module.css';
 function ServicesSection() {
     const refServices = useRef(null);
     const refStatistics = useRef(null);
-
+    
     // fade-in for the Services Items
     useEffect(() => {
         const observer = new IntersectionObserver(
@@ -66,7 +66,6 @@ function ServicesSection() {
         };
     }, []);
     
-
     return (
         
         <>
@@ -98,6 +97,8 @@ function ServicesSection() {
                         Full Quality 
                     </div>
                 </div>
+
+                {/* Add Portfolio component here */}
                 
                 <div className={styles.statistics} ref={refStatistics}>
                     <div className={styles.topLine}></div> {/* This is the top horizontal line */}
@@ -122,8 +123,9 @@ function ServicesSection() {
                     </div>
                     <div className={styles.bottomLine}></div> {/* This is the bottom horizontal line */}
                 </div>
+
+                {/* Packages */}
                 
-                {/* ... other items */}
             </div>
         </>
         
