@@ -6,6 +6,9 @@ const portfolioItemSchema = new mongoose.Schema({
         required: true,
         enum: ['image', 'video']
     },
+    thumbnail: {
+        type: String,
+    },
     title: {
         type: String,
         required: true,

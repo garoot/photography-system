@@ -1,4 +1,6 @@
 const PortfolioItem = require('../models/portfolioItem');
+const VideoItem = require('../models/VideoItem');
+
 const fs = require('fs');
 
 // Helper function to delete a file
@@ -18,11 +20,11 @@ exports.createPortfolioItem = async (req, res) => {
 // Rest of your code to save the file
 
         // Check the type from the request body and adjust the file path if necessary
-        if (req.body.type === 'video') {
-            filePath = filePath.replace('backend/public', 'backend/public/videos');
-        } else {
-            filePath = filePath.replace('backend/public', '');
-        }
+        // if (req.body.type === 'video') {
+        //     filePath = filePath.replace('backend/public', 'backend/public/videos');
+        // } else {
+        filePath = filePath.replace('backend/public', '');
+        // }
 
         let newItemData = {
             ...req.body,
@@ -38,6 +40,35 @@ exports.createPortfolioItem = async (req, res) => {
     }
 };
 
+exports.createVideoItem = async (req, res) => {
+    try {
+        let videoPath, thumbnailPath;
+
+        if (req.files.video && req.files.thumbnail) {
+            videoPath = req.files.video[0].path.replace(/\\/g, '/');
+            thumbnailPath = req.files.thumbnail[0].path.replace(/\\/g, '/');
+        } else {
+            throw new Error('Both video and thumbnail files are required');
+        }
+
+        videoPath = videoPath.replace('backend/public', '');
+        thumbnailPath = thumbnailPath.replace('backend/public', '');
+
+
+        let newVideoData = {
+            title: req.body.title,
+            videoUrl: videoPath,
+            thumbnailUrl: thumbnailPath,
+            description: req.body.description
+        };
+
+        const newVideo = new VideoItem(newVideoData);
+        await newVideo.save();
+        res.status(201).json(newVideo);
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+};
 
 
 // Controller to handle Read operation for all items
