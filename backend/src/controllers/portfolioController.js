@@ -13,11 +13,20 @@ const deleteFile = (filePath) => {
 // Controller to handle Create operation
 exports.createPortfolioItem = async (req, res) => {
     try {
-        let url = req.file ? req.file.path.replace(/\\/g, '/').replace('backend/public', '') : req.body.url;
+        let filePath = req.file ? req.file.path.replace(/\\/g, '/') : req.body.url;
+        console.log('Attempting to save file to:', filePath);
+// Rest of your code to save the file
+
+        // Check the type from the request body and adjust the file path if necessary
+        if (req.body.type === 'video') {
+            filePath = filePath.replace('backend/public', 'backend/public/videos');
+        } else {
+            filePath = filePath.replace('backend/public', '');
+        }
 
         let newItemData = {
             ...req.body,
-            url: url
+            url: filePath
         };
 
         const newItem = new PortfolioItem(newItemData);
@@ -28,6 +37,7 @@ exports.createPortfolioItem = async (req, res) => {
         res.status(400).json({ message: error.message });
     }
 };
+
 
 
 // Controller to handle Read operation for all items

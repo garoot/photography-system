@@ -11,8 +11,9 @@ const path = require('path');
 
 // Configure multer
 const storage = multer.diskStorage({
-    destination: function(req, file, cb) {
-        cb(null, 'public/uploads/'); // Path to store the files
+    destination: function (req, file, cb) {
+        const dir = req.body.type === 'video' ? 'public/videos' : 'public/uploads';
+        cb(null, dir);
     },
     filename: function(req, file, cb) {
         cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));

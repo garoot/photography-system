@@ -1,0 +1,48 @@
+/* Portfolio.css */
+
+.portfolio {
+    padding: 20px;
+}
+
+.works-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2 columns for desktop */
+    gap: 20px; /* Space between items */
+}
+
+.work-item {
+    position: relative;
+}
+
+.work-item img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover; /* Cover the container while preserving the aspect ratio */
+}
+
+.work-info {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.5); /* Semi-transparent overlay */
+    color: white;
+    width: 100%;
+    padding: 10px;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 767px) {
+    .works-grid {
+        grid-template-columns: 1fr; /* 1 column for mobile */
+    }
+}
+
+/* Adjustments for larger screens if necessary */
+@media (min-width: 768px) and (max-width: 1024px) {
+/* Adjust grid or item styles for tablets */
+}
+
+@media (min-width: 1024px) {
+/* Adjust grid or item styles for larger desktops */
+}
