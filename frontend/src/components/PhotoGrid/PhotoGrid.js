@@ -39,15 +39,27 @@ function PhotoGrid({ photos }) {
 
     // Function to fill up columns based on screen size
     const fillupColumns = () => {
-        let numColumns = window.innerWidth <= 400 ? 3 : 6;
+        let numColumns = window.innerWidth < 900 ? 3 : 6;
         let tempColumns = Array.from({ length: numColumns }, () => []);
 
-        let numPhoto = 0;
+        // shuffledPhotos.forEach((photo, index) => {
+        //     tempColumns[index % numColumns].push(photo);
+        // });
         shuffledPhotos.forEach((photo, index) => {
-            tempColumns[index % numColumns].push(photo);
+            // Calculate the column index ensuring it's less than numColumns
+            let columnIndex = index % numColumns;
+            
+            // Only add the photo to the column if it has less than 6 photos
+            if (tempColumns[columnIndex].length < 5 && numColumns === 3) {
+                tempColumns[columnIndex].push(photo);
+            }
+            else if (tempColumns[columnIndex].length < 8 && numColumns === 6){
+                tempColumns[columnIndex].push(photo);
+            }
         });
 
         setColumns(tempColumns); // Update state
+        console.log(tempColumns[1].length)
     };
 
     // Initial fillup

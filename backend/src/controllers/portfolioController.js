@@ -70,6 +70,15 @@ exports.createVideoItem = async (req, res) => {
     }
 };
 
+exports.getVideoItems = async (req, res) => {
+    try {
+        const videoItems = await VideoItem.find({}); // Retrieves all video items
+
+        res.json(videoItems);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
 
 // Controller to handle Read operation for all items
 exports.getPortfolioItems = async (req, res) => {

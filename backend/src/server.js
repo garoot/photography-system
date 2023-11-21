@@ -38,6 +38,7 @@ app.use('/api/auth', authRoutes);
 // Public routes for portfolio items
 app.get('/portfolio-items', portfolioController.getPortfolioItems);
 app.get('/portfolio-items/:id', portfolioController.getPortfolioItem);
+app.get('/portfolio-videos', portfolioController.getVideoItems);
 
 // Protected routes
 app.use('/api', authenticateJWT, protectedRoutes);
