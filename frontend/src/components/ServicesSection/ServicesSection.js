@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import styles from './ServicesSection.module.css';
+import Portfolio from '../Portfolio/Portfolio';
 
 function ServicesSection() {
     const refServices = useRef(null);
@@ -99,7 +100,7 @@ function ServicesSection() {
                 </div>
 
                 {/* Add Portfolio component here */}
-                
+                <Portfolio />
                 
                 <div className={styles.statistics} ref={refStatistics}>
                     <div className={styles.topLine}></div> {/* This is the top horizontal line */}
