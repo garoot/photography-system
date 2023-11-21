@@ -13,6 +13,22 @@
 .video-item {
     position: relative;
     overflow: hidden;
+    opacity: 0;
+}
+
+.fadeInLeft {
+    animation: fadeInLeft 0.7s forwards;
+}
+
+@keyframes fadeInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
 }
 
 .video-item img {
@@ -20,11 +36,12 @@
     display: block;
     object-fit: cover; 
     height: 300px; 
-    transition: transform 0.3s ease; /* Smooth transition for scaling */
+    transition: transform 0.3s ease;
+    transform-origin: center;
 }
 
 .video-item:hover img {
-    transform: scale(1.1); /* Enlarge the image slightly on hover */
+    transform: scale(1.008); /* Enlarge the image slightly on hover */
 }
 
 .video-info {

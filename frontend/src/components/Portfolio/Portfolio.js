@@ -1,8 +1,33 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './Portfolio.css'; // Your CSS file for styling
 
 const Portfolio = () => {
     const [videos, setVideos] = useState([]);
+    const videoRefs = useRef([]);
+
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('fadeInLeft');
+                        observer.unobserve(entry.target); // Stop observing after animating
+                    }
+                });
+            },
+            { threshold: 0.4 }
+        );
+
+        videoRefs.current.forEach((ref) => {
+            if (ref) observer.observe(ref);
+        });
+
+        return () => {
+            videoRefs.current.forEach((ref) => {
+                if (ref) observer.unobserve(ref);
+            });
+        };
+    }, [videos]); // Dependency array
 
     useEffect(() => {
         // Fetch videos from the API when the component mounts
@@ -25,8 +50,8 @@ const Portfolio = () => {
         <div className="portfolio">
             <h2>Featured Videos</h2>
             <div className="videos-grid">
-                {videos.map((video) => (
-                    <div key={video._id} className="video-item">
+                {videos.map((video, index) => (
+                    <div key={video._id} className="video-item" ref={el => videoRefs.current[index] = el}>
                         <img src={`http://localhost:4000/${video.thumbnailUrl}`} />
                         <div className="video-info">
                             <h3>{video.title}</h3>
