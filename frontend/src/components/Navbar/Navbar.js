@@ -38,7 +38,7 @@ function Navbar() {
         // Set a timeout to delay the fade-in effect
         const timer = setTimeout(() => {
             setIsLoaded(true);
-        }, 500); // Delay in milliseconds
+        }, 300); // Delay in milliseconds
 
         return () => {
             window.removeEventListener('scroll', handleScroll);
