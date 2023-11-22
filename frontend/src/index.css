@@ -9,7 +9,6 @@ body {
   background-color: rgb(7, 13, 22);
 }
 html, body {
-  height: 100%; /* Make sure html and body are at least the height of the viewport */
   margin: 0; /* Reset default margin */
 }
 code {

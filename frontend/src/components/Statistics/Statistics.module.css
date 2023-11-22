@@ -1,15 +1,57 @@
 .statistics {
     display: grid;
     grid-template-columns: repeat(4, 1fr); /* 4 items in one row */
-    grid-gap: 10px; /* Adjust the gap as needed */
+    grid-gap: 0px; /* Adjust the gap as needed */
     align-items: center;
+    justify-content: center;
 }
+.statItem::before {
+    content: none; /* No vertical lines when there's only 1 item per row */
+}
+
+
 
 /* Adjust for medium screens */
 @media (max-width: 768px) {
     .statistics {
         grid-template-columns: repeat(2, 1fr); /* 2 items in one row */
     }
+
+    .statItem:nth-of-type(3)::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 10px;
+        bottom: 0;
+        width: 1px; /* Width of the vertical line */
+        background-color: #ccc; /* Color of the vertical line */
+        transform: translateX(-50%); /* Center the line */
+    }
+    .statItem:nth-of-type(6)::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 10px;
+        width: 1px; /* Width of the vertical line */
+        background-color: #ccc; /* Color of the vertical line */
+        transform: translateX(-50%); /* Center the line */
+    }
+    .horizLineContainer{
+        grid-column: 1 / -1; /* Span across all columns */
+        width: 100%;
+        align-items: center;
+    }
+    .horizontalLine {
+        grid-column: 1 / -1; /* Span across all columns */
+        height: 1px; /* Height of the horizontal line */
+        background-color: #ccc; /* Color of the horizontal line */
+        margin: 0px 0px 0px 40px;
+    }
+    .statItem{
+        padding: 40px;
+    }
+    
 }
 
 /* Adjust for smaller screens */
@@ -17,12 +59,32 @@
     .statistics {
         grid-template-columns: 1fr; /* 1 item in one row */
     }
+    .statItem::before {
+        display: none;
+    }
+    .horizLineContainer{
+        display: none;
+    }
+    .statItem:nth-of-type(5)::after,
+    .statItem:nth-of-type(2)::after,
+    .statItem:nth-of-type(3)::after {
+        content: '';
+        display: block;
+        height: 1px;
+        background-color: #ccc; /* Adjust the color as needed */
+        width: 80%; /* Border is 80% of the container's length */
+        margin: 20px auto 0; /* Centers the border and adds space above */
+    }
+    .statItem{
+        padding: 20px;
+    }
 }
 
 .statItem {
     display: flex;
     flex-direction: column;
     align-items: center;
+    position: relative;
 }
 
 .verticalLine {
@@ -31,7 +93,38 @@
 
 .topLine, .bottomLine {
     grid-column: 1 / -1; /* Span across all columns */
-    height: 2px; /* Adjust thickness as needed */
+    height: 1px; /* Adjust thickness as needed */
     background-color: #ccc; /* Adjust color as needed */
     width: 100%;
 }
+
+.bottomLine{
+    margin-bottom: 50px;
+}
+
+.topLine{
+    margin-top: 50px;
+}
+
+
+/* Adding a vertical line before each statItem, except the first one */
+@media (min-width: 768px) {
+    .statItem:nth-of-type(n+3)::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 20px;
+        bottom: 20px;
+        width: 1px; /* Width of the vertical line */
+        background-color: #ccc; /* Color of the vertical line */
+        transform: translateX(-50%); /* Center the line */
+    }
+    .horizLineContainer{
+        display: none;
+    }
+    .statItem{
+        padding: 50px;
+    }
+}
+
+

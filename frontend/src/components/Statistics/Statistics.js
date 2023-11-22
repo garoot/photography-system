@@ -45,21 +45,19 @@ function Statistics() {
                 <div className={styles.description}>Photos Taken</div>
             </div>
 
-            <div className={styles.verticalLine}></div> {/* Vertical line between items */}
-
             <div className={styles.statItem}>
                 <div className={styles.number}>23.5k</div>
                 <div className={styles.description}>Editing Hours</div>
             </div>
-
-            <div className={styles.verticalLine}></div> {/* Vertical line between items */}
+            <div className={styles.horizLineContainer}>
+                <div className={styles.horizontalLine}></div>
+            </div>
             
             <div className={styles.statItem}>
                 <div className={styles.number}>130x</div>
                 <div className={styles.description}>Company Growth</div>
             </div>
 
-            <div className={styles.verticalLine}></div> {/* Vertical line between items */}
             
             <div className={styles.statItem}>
                 <div className={styles.number}>100%</div>
