@@ -1,18 +1,17 @@
 /* ServicesSection.module.css */
 .services {
-    position: absolute;
-    top: 700px; /* Adjust as needed to overlap the photo grid */
+    top: -400px;
     left: 0;
     right: 0;
     bottom: 0;
-    z-index: 500; /* Ensure this is above the photo grid z-index */
+    z-index: 1000; /* Ensure this is above the photo grid z-index */
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-    padding: 200px 20px 20px 20px;
+    padding: 0px 20px 20px 20px;
     background-color: rgb(239, 239, 239);
     height: 100%;
-    padding-bottom: 00px;
+    position: relative;
 }
 @keyframes slideAndFade {
     from {
@@ -41,7 +40,6 @@
 }
 
 
-
 .serviceItem img{
     margin-bottom: 15px;
     width: 45px;
@@ -60,8 +58,8 @@
 
 @media screen and (max-width: 450px){
     .services{
-        padding-top: 500px;
-        padding-bottom: 400px;
+        top: -300px;
+        padding-bottom: 0px;
     }
     .servicesContainer{
         display: flex;

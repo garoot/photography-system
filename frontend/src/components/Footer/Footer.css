@@ -8,7 +8,7 @@
     flex-wrap: wrap; /* Ensure the sections can wrap */
     /* position: relative; */
     z-index: 1000;
-    margin-top: 2000px;
+    margin-top: 0px;
 }
 
 .footer-section {
@@ -58,11 +58,10 @@
     .footer {
         /* position: relative; */
         z-index: 2000;
-        margin-top: 1600px;
     }
 }
 @media (min-width: 768px) {
     .footer {
-        margin-top: 2500px;
+        /* margin-top: 2500px; */
     }
 }

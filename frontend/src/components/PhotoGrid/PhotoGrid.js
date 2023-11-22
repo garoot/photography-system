@@ -81,8 +81,6 @@ function PhotoGrid({ photos }) {
         };
     }, [shuffledPhotos]); // Dependency on shuffledPhotos
 
-
-
     
     const [showHeader, setShowHeader] = useState(false);
     const gridRef = useRef(null);
