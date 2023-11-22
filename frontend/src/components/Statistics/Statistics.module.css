@@ -1,0 +1,37 @@
+.statistics {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 4 items in one row */
+    grid-gap: 10px; /* Adjust the gap as needed */
+    align-items: center;
+}
+
+/* Adjust for medium screens */
+@media (max-width: 768px) {
+    .statistics {
+        grid-template-columns: repeat(2, 1fr); /* 2 items in one row */
+    }
+}
+
+/* Adjust for smaller screens */
+@media (max-width: 480px) {
+    .statistics {
+        grid-template-columns: 1fr; /* 1 item in one row */
+    }
+}
+
+.statItem {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.verticalLine {
+    display: none; /* Assuming vertical lines are not needed with grid layout */
+}
+
+.topLine, .bottomLine {
+    grid-column: 1 / -1; /* Span across all columns */
+    height: 2px; /* Adjust thickness as needed */
+    background-color: #ccc; /* Adjust color as needed */
+    width: 100%;
+}

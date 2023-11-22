@@ -48,14 +48,15 @@ function PhotoGrid({ photos }) {
         shuffledPhotos.forEach((photo, index) => {
             // Calculate the column index ensuring it's less than numColumns
             let columnIndex = index % numColumns;
-            
+            tempColumns[columnIndex].push(photo);
+
             // if mobile screen - Only add the photo to the column if it has less than 5 photos
-            if (tempColumns[columnIndex].length < 5 && numColumns === 3) {
-                tempColumns[columnIndex].push(photo);
-            }
-            else if (tempColumns[columnIndex].length < 8 && numColumns === 6){
-                tempColumns[columnIndex].push(photo);
-            }
+            // if (tempColumns[columnIndex].length < 5 && numColumns === 3) {
+            //     tempColumns[columnIndex].push(photo);
+            // }
+            // else if (tempColumns[columnIndex].length < 8 && numColumns === 6){
+            //     tempColumns[columnIndex].push(photo);
+            // }
         });
 
         setColumns(tempColumns); // Update state
