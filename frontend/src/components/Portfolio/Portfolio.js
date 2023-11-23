@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './Portfolio.css'; // Your CSS file for styling
+import { Link } from 'react-router-dom';
 
 const Portfolio = () => {
     const [videos, setVideos] = useState([]);
@@ -52,10 +53,12 @@ const Portfolio = () => {
             <div className="videos-grid">
                 {videos.map((video, index) => (
                     <div key={video._id} className="video-item" ref={el => videoRefs.current[index] = el}>
-                        <img src={`http://localhost:4000/${video.thumbnailUrl}`} />
-                        <div className="video-info">
-                            <h3>{video.title}</h3>
-                        </div>
+                        <Link to={`/video/${video._id}`}>
+                            <img src={`http://localhost:4000/${video.thumbnailUrl}`} />
+                            <div className="video-info">
+                                <h3>{video.title}</h3>
+                            </div>
+                        </Link>
                     </div>
                 ))}
             </div>

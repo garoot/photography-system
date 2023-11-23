@@ -1,0 +1,29 @@
+.video-container{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    height: 100vh;
+    padding-top: 50px;
+}
+
+/* Base styles for the iframe */
+.video-iframe {
+    width: 100%; /* Full width on mobile devices */
+    height: 500px; /* Default height */
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+    .video-iframe {
+        width: 600px; /* Adjust as needed */
+        height: 450px; /* Adjust as needed */
+    }
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+    .video-iframe {
+        width: 800px; /* Adjust as needed */
+        height: 600px; /* Adjust as needed */
+    }
+}

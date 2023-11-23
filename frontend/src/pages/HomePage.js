@@ -22,7 +22,6 @@ function HomePage() {
 
     return (
         <div className='root'>
-            <Navbar />
             <main>
                 <PhotoGrid photos={photos} />
                 <ServicesSection />
