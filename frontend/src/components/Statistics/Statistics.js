@@ -57,7 +57,6 @@ function Statistics() {
                 <div className={styles.number}>130x</div>
                 <div className={styles.description}>Company Growth</div>
             </div>
-
             
             <div className={styles.statItem}>
                 <div className={styles.number}>100%</div>

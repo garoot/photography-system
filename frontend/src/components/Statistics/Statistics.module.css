@@ -85,6 +85,23 @@
     flex-direction: column;
     align-items: center;
     position: relative;
+    opacity: 0;
+    transform: translateY(20px); /* Slightly translate the items downwards */
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.number{
+    font-size:50px;
+    font-weight: 600;
+}
+
+.description{
+    color: grey;
+}
+
+.statItemVisible {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 .verticalLine {
