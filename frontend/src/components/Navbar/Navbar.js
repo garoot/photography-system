@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './Navbar.css';
+import { Link } from 'react-router-dom';
 
 function Navbar() {
     const [backgroundColor, setBackgroundColor] = useState('rgba(7, 13, 22, 0.0)');
@@ -49,9 +50,9 @@ function Navbar() {
     return (
         <nav className={`navbar ${isLoaded ? 'fade-in' : ''}`} style={{ backgroundColor: backgroundColor }}>
             <div className="navbar-content">
-                <div className="navbar-logo">
-                    <img src="/logo-white@1.5x.png" alt="Malak Photo" />
-                </div>
+                    <Link to="/" className="navbar-logo">
+                        <img src="/logo-white@1.5x.png" alt="Malak Photo" />
+                    </Link>
                 <div className="menu-burger">
                     <span>Menu</span> {/* Replace with actual burger icon/menu component */}
                 </div>
