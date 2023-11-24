@@ -1,14 +1,13 @@
-/* ServicesSection.module.css */
 .services {
     top: -400px;
     left: 0;
     right: 0;
     bottom: 0;
-    z-index: 1000; /* Ensure this is above the photo grid z-index */
+    z-index: 1000; 
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-    padding: 0px 20px 20px 20px;
+    padding: 50px 20px 70px 20px;
     background-color: rgb(239, 239, 239);
     height: 100%;
     position: relative;
@@ -28,8 +27,7 @@
     color: rgb(71, 71, 71);
 }
 .serviceItem {
-    opacity: 0; /* Start elements as hidden */
-    /* Ensure you don't have any other CSS accidentally resetting the opacity */
+    opacity: 0; 
     text-align: center;
     display: flex;
     flex-direction: column;
@@ -46,7 +44,7 @@
 }
 
 .serviceItemVisible {
-    animation: slideAndFade 0.5s ease-out forwards; /* Add 'forwards' here */
+    animation: slideAndFade 0.5s ease-out forwards;
 }
 
 
@@ -54,18 +52,20 @@
     display: flex;
     justify-content: space-around;
     align-items: center;
+    margin: 20px 20% 20px 20%; 
 }
 
-@media screen and (max-width: 450px){
-    .services{
+@media screen and (max-width: 450px) {
+    .services {
         top: -300px;
         padding-bottom: 0px;
     }
-    .servicesContainer{
+    .servicesContainer {
         display: flex;
-        margin: 20px 120px 20px 120px;
+        margin: 20px 30px 20px 30px;
         flex-wrap: wrap;
     }
+
 }
-/*  */
+
 
