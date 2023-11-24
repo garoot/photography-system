@@ -67,8 +67,6 @@ function ServicesSection() {
                         Full Quality 
                     </div>
                 </div>
-
-                {/* Add Portfolio component here */}
                 <Portfolio />
                 <Statistics />
 

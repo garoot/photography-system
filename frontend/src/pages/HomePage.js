@@ -22,12 +22,9 @@ function HomePage() {
 
     return (
         <div className='root'>
-            <main>
                 <PhotoGrid photos={photos} />
                 <ServicesSection />
-            </main>
-            {/* ... potentially a footer */}
-            <Footer/>
+                <Footer/>
         </div>
     );
 }

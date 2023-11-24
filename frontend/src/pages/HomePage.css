@@ -1,6 +1,6 @@
 main {
     display: flex;
-    flex-direction: column; /* Stack children vertically */
+    flex-direction: column; 
 }
 
 .my-masonry-grid {
@@ -13,10 +13,14 @@ background-clip: padding-box;
 
 /* Style your images as needed */
 .my-masonry-grid_column > div {
-margin-bottom: 1em;
+    margin-bottom: 1em;
 }
 
-.root{
+.root {
     display: flex;
     flex-direction: column;
+    padding: 0; /* Resets padding */
+    margin: 0; /* Resets margin */
+    /* Ensure children are not pushing the container size */
 }
+
