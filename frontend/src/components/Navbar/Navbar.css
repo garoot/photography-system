@@ -14,18 +14,6 @@
 }
 
 
-/* Other styles remain the same */
-
-
-/* .navbar.scrolled {
-    background-color: rgb(131, 34, 125); 
-} */
-
-/* .navbar-logo,
-.menu-burger {
-    opacity: 1;
-} */
-
 .navbar-content {
     width: 100%; /* Make sure this is set to 100% */
     display: flex;
@@ -48,7 +36,18 @@
     font-size: 20px; /* Adjust size as needed */
     color: #ffffff; /* Adjust color as needed */
     cursor: pointer;
-    padding: 15px 0 20px 0;
+    /* padding: 15px 0 20px 0; */
+    cursor: pointer;
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    transition: all 0.3s ease; /* Smooth transition for any changes */
+}
+
+.menu-burger:hover {
+    background-color: #f0f0f0; /* Example: light gray background on hover */
+    color: #333; /* Darker text color on hover */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Soft shadow for depth */
 }
 
 @keyframes fadeIn {
