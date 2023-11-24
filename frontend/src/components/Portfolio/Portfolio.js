@@ -53,7 +53,11 @@ const Portfolio = () => {
             <div className="videos-grid">
                 {videos.map((video, index) => (
                     <div key={video._id} className="video-item" ref={el => videoRefs.current[index] = el}>
-                        <Link to={`/video/${video._id}`}>
+                        
+                        <Link to={{
+                            pathname: `/video/${video._id}`,
+                            // state: { videoId: video._id, videoTitle: video.title, videoDesc: video.description } 
+                        }}>
                             <img src={`http://localhost:4000/${video.thumbnailUrl}`} />
                             <div className="video-info">
                                 <h3>{video.title}</h3>

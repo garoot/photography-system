@@ -39,6 +39,7 @@ app.use('/api/auth', authRoutes);
 app.get('/portfolio-items', portfolioController.getPortfolioItems);
 app.get('/portfolio-items/:id', portfolioController.getPortfolioItem);
 app.get('/portfolio-videos', portfolioController.getVideoItems);
+app.get('/portfolio-videos/:id', portfolioController.getVideoItem);
 
 // Protected routes
 app.use('/api', authenticateJWT, protectedRoutes);

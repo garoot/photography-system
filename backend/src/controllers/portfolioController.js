@@ -80,6 +80,21 @@ exports.getVideoItems = async (req, res) => {
     }
 };
 
+exports.getVideoItem = async (req, res) => {
+    try {
+        const videoItemId = req.params.id; // Get the ID from the request parameters
+        const videoItem = await VideoItem.findById(videoItemId); // Retrieve the specific video item by ID
+
+        if (!videoItem) {
+            return res.status(404).json({ message: 'Video item not found' });
+        }
+
+        res.json(videoItem);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
 // Controller to handle Read operation for all items
 exports.getPortfolioItems = async (req, res) => {
     try {

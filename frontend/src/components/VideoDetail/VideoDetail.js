@@ -1,13 +1,27 @@
-import React from 'react';
+import React, { useState,useEffect } from 'react';
 import './VideoDetail.css'; // Your CSS file for styling
+import { useParams, useLocation } from 'react-router-dom'; // Import useLocation
+
 
 const VideoDetail = () => {
-    // Testing with static values
-    const video = {
-        title: "Sample Video",
-        description: "This is a sample description."
-    };
+    const [video, setVideo] = useState([]);
+    const { id } = useParams();
 
+    useEffect( () =>  {
+        const fetchVideo = async () => {
+            try {
+                const response = await fetch(`http://localhost:4000/portfolio-videos/${id}`);
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const data = await response.json();
+                setVideo(data); // Set the video in state
+            } catch (error) {
+                console.error('Error fetching video:', error);
+            }
+        };
+        fetchVideo();
+    })
     return (
         <div className='video-container'>
             <h3>{video.title}</h3>
