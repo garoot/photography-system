@@ -1,10 +1,33 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './Navbar.css';
 import { Link } from 'react-router-dom';
 
 function Navbar() {
     const [backgroundColor, setBackgroundColor] = useState('rgba(7, 13, 22, 0.0)');
     const [isLoaded, setIsLoaded] = useState(false); // State to handle the fade-in
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const menuRef = useRef(); // Ref for the dropdown menu
+
+    const toggleMenu = () => {
+        setIsMenuOpen(!isMenuOpen);
+    };
+    
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (menuRef.current && !menuRef.current.contains(event.target)) {
+                setIsMenuOpen(false);
+            }
+        };
+    
+        // Add event listener
+        document.addEventListener('mousedown', handleClickOutside);
+    
+        return () => {
+            // Clean up the event listener
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, []); // Empty dependency array ensures this effect runs once on mount
+    
 
     useEffect(() => {
         const handleScroll = () => {
@@ -53,9 +76,22 @@ function Navbar() {
                     <Link to="/" className="navbar-logo">
                         <img src="/logo-white@1.5x.png" alt="Malak Photo" />
                     </Link>
-                <div className="menu-burger">
-                    <span>Menu</span> {/* Replace with actual burger icon/menu component */}
-                </div>
+                    <div className="menu-container">
+                        <div className="menu-burger" onClick={toggleMenu}>
+                            <span>Menu</span> {/* Replace with actual burger icon/menu component */}
+                        </div>
+
+                        {isMenuOpen && (
+                            <div className="dropdown-menu" ref={menuRef}>
+                                {/* Your menu items here */}
+                                <Link to="/about">About</Link>
+                                <Link to="/services">Services</Link>
+                                <Link to="/contact">Contact</Link>
+                                {/* more links or menu items */}
+                            </div>
+                        )}
+                    </div>
+
             </div>
         </nav>
     );
