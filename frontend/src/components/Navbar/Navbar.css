@@ -62,12 +62,11 @@
 
 .dropdown-menu {
     position: absolute;
-    left: -100%;
     top: 100%; /* Position the menu right below the burger menu */
     background-color: white;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 4px;
-    padding: 1em;
+    border-radius: 3px;
+    padding: 0;
     width: max-content; /* Adjust width as needed */
     margin-top: -15px;
     /* More styling */
@@ -76,15 +75,18 @@
 
 .dropdown-menu a {
     display: block;
-    padding: 10px;
-    border-radius: 5px;
+    padding: 13px 30px;
+    border-radius: 2px;
     transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition for background and text color */
     /* Additional styling as needed */
+    text-align: left;
+    text-decoration: none;
+    font-weight: 400;
+    color: #000;
 }
 
 .dropdown-menu a:hover {
     background-color: rgb(7, 13, 22); /* Example: light background on hover */
     color: rgb(253, 253, 253); /* Example: darker text color on hover */
-    
     /* Additional hover effects if needed */
 }

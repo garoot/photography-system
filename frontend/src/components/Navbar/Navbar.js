@@ -7,14 +7,18 @@ function Navbar() {
     const [isLoaded, setIsLoaded] = useState(false); // State to handle the fade-in
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const menuRef = useRef(); // Ref for the dropdown menu
+    const menuButtonRef = useRef(null);
 
-    const toggleMenu = () => {
+
+    const toggleMenu = (event) => {
+        event.stopPropagation();
         setIsMenuOpen(!isMenuOpen);
     };
     
     useEffect(() => {
         const handleClickOutside = (event) => {
-            if (menuRef.current && !menuRef.current.contains(event.target)) {
+            if (menuRef.current && !menuRef.current.contains(event.target) &&
+            menuButtonRef.current && !menuButtonRef.current.contains(event.target)) {
                 setIsMenuOpen(false);
             }
         };
@@ -77,7 +81,7 @@ function Navbar() {
                         <img src="/logo-white@1.5x.png" alt="Malak Photo" />
                     </Link>
                     <div className="menu-container">
-                        <div className="menu-burger" onClick={toggleMenu}>
+                        <div className="menu-burger" onClick={toggleMenu} ref={menuButtonRef}>
                             <span>Menu</span> {/* Replace with actual burger icon/menu component */}
                         </div>
 
