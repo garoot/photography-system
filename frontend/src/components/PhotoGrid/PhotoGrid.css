@@ -84,12 +84,6 @@
     margin-bottom: 0.5em; /* Space between the header and button */
 }
 
-@media (max-width: 450px) {
-    .header-container{
-        top: 30%;
-    }
-}
-
 
 /* Styling for the button */
 .learn-more-btn {

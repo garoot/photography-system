@@ -16,11 +16,4 @@ background-clip: padding-box;
     margin-bottom: 1em;
 }
 
-.root {
-    display: flex;
-    flex-direction: column;
-    padding: 0; /* Resets padding */
-    margin: 0; /* Resets margin */
-    /* Ensure children are not pushing the container size */
-}
 

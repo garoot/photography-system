@@ -1,4 +1,5 @@
 .services {
+    /* top: -100px; */
     left: 0;
     right: 0;
     z-index: 1000; 
@@ -57,7 +58,6 @@
 
 @media screen and (max-width: 450px) {
     .services {
-        top: -300px;
         padding-bottom: 0px;
     }
     .servicesContainer {

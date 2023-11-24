@@ -64,7 +64,7 @@
     position: absolute;
     top: 100%; /* Position the menu right below the burger menu */
     background-color: white;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 1px -1px 5px rgba(240, 240, 240, 0.2);
     border-radius: 3px;
     padding: 0;
     width: max-content; /* Adjust width as needed */
@@ -75,7 +75,7 @@
 
 .dropdown-menu a {
     display: block;
-    padding: 13px 30px;
+    padding: 15px 30px 15px 15px;
     border-radius: 2px;
     transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition for background and text color */
     /* Additional styling as needed */
