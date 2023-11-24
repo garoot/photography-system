@@ -27,7 +27,6 @@ const VideoDetail = () => {
             <h3>{video.title}</h3>
             <iframe 
                 className='video-iframe'
-
                 src="https://www.youtube.com/embed/O5lTrkHelGg" // Simplified URL for testing
                 title="YouTube video player" 
                 frameborder="0" 

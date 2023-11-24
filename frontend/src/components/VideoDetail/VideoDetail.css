@@ -3,13 +3,7 @@
     align-items: center;
     flex-direction: column;
     height: 100vh;
-    padding-top: 50px;
-}
-
-/* Base styles for the iframe */
-.video-iframe {
-    width: 100%; /* Full width on mobile devices */
-    height: 500px; /* Default height */
+    padding-top: 100px;
 }
 
 /* Medium devices (tablets, 768px and up) */
@@ -27,3 +21,9 @@
         height: 600px; /* Adjust as needed */
     }
 }
+@media (max-width: 250px) {
+    .video-iframe {
+        display: none;
+    }
+}
+
