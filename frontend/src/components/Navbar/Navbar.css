@@ -73,3 +73,18 @@
     /* More styling */
 }
 
+
+.dropdown-menu a {
+    display: block;
+    padding: 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition for background and text color */
+    /* Additional styling as needed */
+}
+
+.dropdown-menu a:hover {
+    background-color: rgb(7, 13, 22); /* Example: light background on hover */
+    color: rgb(253, 253, 253); /* Example: darker text color on hover */
+    
+    /* Additional hover effects if needed */
+}
