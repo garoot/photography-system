@@ -54,7 +54,7 @@ const Portfolio = () => {
                 {videos.map((video, index) => (
                     <div key={video._id} className="video-item" ref={el => videoRefs.current[index] = el}>
                         
-                        <Link to={{
+                        <Link className='video-link' to={{
                             pathname: `/video/${video._id}`,
                             // state: { videoId: video._id, videoTitle: video.title, videoDesc: video.description } 
                         }}>

@@ -47,8 +47,11 @@
 .video-info {
     bottom: 0;
     left: 0;
-    color: white;
+    color: rgba(26, 26, 26, 0.744);
     width: 100%;
+}
+.video-link {
+    text-decoration: none;
 }
 
 /* Mobile responsiveness */
