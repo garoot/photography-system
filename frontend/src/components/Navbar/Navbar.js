@@ -1,14 +1,38 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './Navbar.css';
 import { Link } from 'react-router-dom';
+import LoginModal from '../Login/Login';
 
 function Navbar() {
     const [backgroundColor, setBackgroundColor] = useState('rgba(7, 13, 22, 0.0)');
-    const [isLoaded, setIsLoaded] = useState(false); // State to handle the fade-in
+    const [isLoaded, setIsLoaded] = useState(false); 
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const menuRef = useRef(); // Ref for the dropdown menu
+    const menuRef = useRef(); 
     const menuButtonRef = useRef(null);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    
 
+
+    const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+    const loginModalRef = useRef();
+
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        setIsLoggedIn(!!token); // Sets to true if token exists, false otherwise
+    }, [isLoggedIn]);
+
+    const handleLogout = () => {
+        localStorage.removeItem('token');
+        setIsLoggedIn(false);
+    };
+
+    // Function to toggle the login modal
+    const toggleLoginModal = () => {
+        if(isMenuOpen){
+            setIsMenuOpen(!isMenuOpen);
+        }
+        setIsLoginModalOpen(!isLoginModalOpen);
+    };
 
     const toggleMenu = (event) => {
         event.stopPropagation();
@@ -17,9 +41,16 @@ function Navbar() {
     
     useEffect(() => {
         const handleClickOutside = (event) => {
+            console.log("click...")
+            // Existing logic for closing the menu
             if (menuRef.current && !menuRef.current.contains(event.target) &&
-            menuButtonRef.current && !menuButtonRef.current.contains(event.target)) {
+                menuButtonRef.current && !menuButtonRef.current.contains(event.target)) {
                 setIsMenuOpen(false);
+            }
+    
+            // Logic to close the login modal if clicked outside
+            if (isLoginModalOpen && loginModalRef.current && !loginModalRef.current.contains(event.target)) {
+                setIsLoginModalOpen(false);
             }
         };
     
@@ -30,9 +61,9 @@ function Navbar() {
             // Clean up the event listener
             document.removeEventListener('mousedown', handleClickOutside);
         };
-    }, []); // Empty dependency array ensures this effect runs once on mount
+    }, [isMenuOpen, isLoginModalOpen]);
     
-
+    
     useEffect(() => {
         const handleScroll = () => {
             // const newColor = window.scrollY > 0 ? 'rgba(7, 13, 22, 0.94)' : 'rgba(7, 13, 22, 0.1)';
@@ -88,15 +119,25 @@ function Navbar() {
                         {isMenuOpen && (
                             <div className="dropdown-menu" ref={menuRef}>
                                 {/* Your menu items here */}
-                                <Link to="/about">About</Link>
+                                {isLoggedIn ? 
+                                    (
+                                    <>
+                                    <Link to="#" onClick={handleLogout}>Logout</Link>
+                                    <Link to="/dashboard">Dashboard</Link>
+                                    </>
+                                    ) 
+                                    : 
+                                    (<Link to="#" onClick={toggleLoginModal}>Login</Link>)
+                                }                                
+                                <Link to="/book-session">Book a session</Link>
                                 <Link to="/services">Services</Link>
-                                <Link to="/contact">Contact</Link>
+                                <Link to="/contact">Contact us</Link>
                                 {/* more links or menu items */}
                             </div>
                         )}
                     </div>
-
             </div>
+            <LoginModal isOpen={isLoginModalOpen} onClose={() => setIsLoginModalOpen(false)} modalRef={loginModalRef} />
         </nav>
     );
 }

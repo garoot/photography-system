@@ -184,7 +184,7 @@ function PhotoGrid({ photos }) {
             {/* Header and button */}
             <div className={`header-container ${showHeader ? 'fade-in' : ''}`}>
                 <h1 className="header-title">Malak Alshahrani</h1>
-                <a href="#learn-more" className="learn-more-btn">Learn More</a>
+                <a href="#learn-more" className="learn-more-btn">Gallery</a>
             </div>
         </>
     );
