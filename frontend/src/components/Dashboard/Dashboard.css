@@ -21,6 +21,10 @@
 .sidebar.open {
     transform: translateX(0);
 }
+.sidebar-buttons.open {
+    transform: translateX(0);
+    padding: 0;
+}
 
 .burger-menu {
     /* Other styling for the burger menu */
@@ -34,12 +38,19 @@
     visibility: visible;
 }
 
+.navbar-logo{
+    display: flex;
+    justify-content: start;
+    padding-left: 25%;
+}
+
 .sidebar-buttons{
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    padding: 20% 10% 0px 20%;
+    align-items: start;
+    padding: 20% 10% 0px 0%;
     border-color: brown;
+    width: 100%;
 }
 
 .sidebar-buttons button{
@@ -47,17 +58,33 @@
     background-color:rgba(137, 43, 226, 0);
     border-width: 0;
     text-align: left;
-    margin-left: 15px;
+    margin-left: 0px;
+    transition: background-color 0.3s, color 0.3s; /* Smooth transition for color change */
+    width: 100%;
+    padding-left: 25%;
+}
+
+.sidebar-buttons button.active {
+    /* Styles for active button */
+    background-color: #4CAF50; /* Example active color */
+    color: white;
+}
+
+.sidebar-buttons button:hover {
+    /* Styles for hover state */
+    background-color: rgba(69, 160, 73, 0.464); /* Example hover color */
+    color: white;
 }
 
 @media (max-width: 700px) {
     .sidebar{
         width: 35%;
         padding: 10% 0 80% 0;
-        transform: translateX(-100%); /* Initially hide the sidebar */
+        transform: translateX(-200%); /* Initially hide the sidebar */
     }
     .sidebar-buttons{
         padding: 20% 10% 0px 27%;
+        transform: translateX(-200%); /* Initially hide the sidebar */
     }
     .sidebar-buttons button{
         margin-left: 0px;
@@ -87,3 +114,4 @@
         margin-left: 0px;
     }
 }
+

@@ -28,8 +28,8 @@ const LoginModal = ({ isOpen, onClose, modalRef }) => {
                 localStorage.setItem('token', data.token);
                 // Close the modal after successful login
                 onClose(); 
-                // navigate('/'); // Redirect to the main page
-                window.location.reload();
+                navigate('/dashboard'); // Redirect to the main page
+                // window.location.reload();
             } else {
                 // Handle errors (e.g., show an error message)
                 console.error('Login failed:', data.message);

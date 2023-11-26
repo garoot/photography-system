@@ -7,6 +7,8 @@ import { useNavigate } from 'react-router-dom';
 const Dashboard = () => {
 
     const navigate = useNavigate();
+    const [activeButton, setActiveButton] = useState('Activity'); // Default active button
+
     
     const handleLogout = () => {
         localStorage.removeItem('token');
@@ -41,12 +43,23 @@ const Dashboard = () => {
                 <Link to="/" className="navbar-logo">
                             <img src="/logo-white@1.5x.png" alt="Malak Photo" />
                 </Link>
-                <div className='sidebar-buttons'>
-                    <button>Activity</button>
-                    <button>Booking Requests</button>
-                    <button>PhotoGrid Photos</button>
-                    <button>Portfolio Videos</button>
-                    <button>Statistics</button>
+                <div className={`sidebar-buttons ${isSidebarOpen ? 'open' : ''}`}>
+                    <button className={activeButton === 'Activity' ? 'active' : ''} onClick={() => setActiveButton('Activity')}>
+                        Activity
+                    </button>
+                    <button className={activeButton === 'Booking Requests' ? 'active' : ''} onClick={() => setActiveButton('Booking Requests')}>
+                        Booking Requests
+                    </button>
+                    {/* <button>Booking Requests</button> */}
+                    <button className={activeButton === 'PhotoGrid Photos' ? 'active' : ''} onClick={() => setActiveButton('PhotoGrid Photos')}>
+                        PhotoGrid Photos
+                    </button>
+                    <button className={activeButton === 'Portfolio Videos' ? 'active' : ''} onClick={() => setActiveButton('Portfolio Videos')}>
+                        Portfolio Videos
+                    </button>
+                    <button className={activeButton === 'Statistics' ? 'active' : ''} onClick={() => setActiveButton('Statistics')}>
+                        Statistics
+                    </button>
                     <button onClick={handleLogout}>Logout</button>
                 </div>
             </div>
