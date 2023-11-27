@@ -12,6 +12,9 @@ const imageStorage = multer.diskStorage({
 });
 const uploadImage = multer({ storage: imageStorage });
 
+const uploadImages = multer({ storage: imageStorage }).array('images', 35);
+
+
 // Configuration for video uploads
 const videoStorage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -30,4 +33,4 @@ const uploadVideo = multer({ storage: videoStorage }).fields([
     { name: 'thumbnail', maxCount: 1 }
 ]);
 
-module.exports = { uploadImage, uploadVideo };
+module.exports = { uploadImage, uploadImages, uploadVideo };

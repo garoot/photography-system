@@ -2,15 +2,41 @@ const PortfolioItem = require('../models/portfolioItem');
 const VideoItem = require('../models/VideoItem');
 
 const fs = require('fs');
+const path = require('path');
+
 
 // Helper function to delete a file
-const deleteFile = (filePath) => {
-    fs.unlink(filePath, (err) => {
-        if (err) {
-            console.error("Failed to delete file:", err);
-        }
-    });
+// const deleteFile = (filePath) => {
+//     fs.unlink(filePath, (err) => {
+//         if (err) {
+//             console.error("Failed to delete file:", err);
+//         }
+//     });
+// };
+
+const baseDir = path.join(__dirname, '../../'); // Adjust this path as per your directory structure
+const sanitizeFilePath = (filePath) => {
+    // Remove double quotes if present
+    return filePath.replace(/"/g, '');
 };
+
+const deleteFile = (filePath) => {
+    const sanitizedFilePath = sanitizeFilePath(filePath);
+    const absoluteFilePath = path.join(baseDir, sanitizedFilePath);
+    console.log(absoluteFilePath)
+
+    if (fs.existsSync(absoluteFilePath)) {
+        try {
+            fs.unlinkSync(absoluteFilePath);
+            console.log(`File deleted successfully: ${absoluteFilePath}`);
+        } catch (err) {
+            console.error(`Failed to delete file: ${absoluteFilePath}`, err);
+        }
+    } else {
+        console.warn(`File not found, cannot delete: ${absoluteFilePath}`);
+    }
+};
+
 
 // Controller to handle Create operation
 exports.createPortfolioItem = async (req, res) => {
@@ -139,6 +165,59 @@ exports.updatePortfolioItem = async (req, res) => {
         res.status(400).json({ message: error.message });
     }
 };
+const mongoose = require('mongoose');
+
+exports.bulkUpdatePortfolioItems = async (req, res) => {
+    try {
+        const uploadedImages = req.files || []; // Use an empty array if no files are uploaded
+        const updates = req.body.updates ? JSON.parse(req.body.updates) : [];
+        if (updates.length === 0) {
+            return res.status(400).json({ message: "No 'updates' provided" });
+        }
+        // Process new uploads
+        for (const file of uploadedImages) {
+            const newItem = new PortfolioItem({
+                type: 'image',
+                url: file.path.replace('backend/public', ''),
+                // Add other fields as necessary
+            });
+            await newItem.save();
+        }
+
+        // Process updates and deletions
+        for (const update of updates) {
+            if (!mongoose.Types.ObjectId.isValid(update.id)) {
+                throw new Error(`Invalid ID: ${update.id}`);
+            }
+
+            switch (update.action) {
+                case 'update':
+                    const updatedItem = await PortfolioItem.findByIdAndUpdate(update.id, update.data, { new: true });
+                    if (!updatedItem) {
+                        throw new Error(`Update failed for item with ID ${update.id}`);
+                    }
+                    break;
+                case 'delete':
+                    const deletedItem = await PortfolioItem.findByIdAndDelete(update.id);
+                    if (!deletedItem) {
+                        throw new Error(`Delete failed for item with ID ${update.id}`);
+                    }
+                    console.log(update)
+                    deleteFile(JSON.stringify(update.url));
+                    break;
+                default:
+                    throw new Error(`Unknown action: ${update.action}`);
+            }
+        }
+
+        res.status(200).json({ message: "Bulk update successful" });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+
+
 
 // Controller to handle Delete operation
 exports.deletePortfolioItem = async (req, res) => {

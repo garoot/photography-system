@@ -38,7 +38,7 @@ const Dashboard = () => {
     }, []);
 
     return (
-        <div className='main'>
+        <div className='main-container'>
             <div className={`sidebar ${isSidebarOpen ? 'open' : ''}`} ref={sidebarRef}>
                 <Link to="/" className="navbar-logo">
                             <img src="/logo-white@1.5x.png" alt="Malak Photo" />
