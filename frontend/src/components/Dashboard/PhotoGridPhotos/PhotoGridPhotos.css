@@ -1,15 +1,30 @@
-.photo-form{
+.forms-container{
+    padding: 25px;
     display: flex;
     flex-wrap: wrap;
-    margin-bottom: 20px;
+    width: 80%;
     justify-content: center;
+}
+
+.photo-form{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
     align-items: center;
+    border: 2px solid #e9e9e9; /* Black border, 2px thick */
+    padding: 5px; /* Add some padding inside the border */
+    margin: 5px; /* Space between each form */
 }
 
 .photo-form form{
     display: flex;
+    flex-direction: column;
+}
+
+.photo-form input, textarea, button{
+    margin-bottom: 10px;
 }
 
 .photo-form img{
-    max-width: 45px;
+    max-width: 75px;
 }
