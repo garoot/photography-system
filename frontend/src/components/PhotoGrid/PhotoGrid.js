@@ -8,9 +8,7 @@ function PhotoGrid({ photos }) {
     const [shuffledPhotos, setShuffledPhotos] = useState([]);
     const [columns, setColumns] = useState([]); // New state for columns
 
-
     // const getNumColumns = () => window.innerWidth >= 768 ? 6 : 3;
-
     
     useEffect(() => {
         console.log("Triggered...1")
@@ -36,7 +34,6 @@ function PhotoGrid({ photos }) {
         setShuffledPhotos(shuffle([...photos]));
     }, [photos]); // This will only run when the 'photos' prop changes
 
-
     // Function to fill up columns based on screen size
     const fillupColumns = () => {
         let numColumns = window.innerWidth < 768 ? 3 : 6;
@@ -58,7 +55,6 @@ function PhotoGrid({ photos }) {
             //     tempColumns[columnIndex].push(photo);
             // }
         });
-
         setColumns(tempColumns); // Update state
         console.log(tempColumns[1].length)
     };

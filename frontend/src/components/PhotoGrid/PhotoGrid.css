@@ -62,7 +62,6 @@
     animation-name: initialMoveDown;
 }
 
-
 /* Container for the header and button */
 .header-container {
     /* ... other styles ... */
@@ -76,14 +75,12 @@
     z-index: 500; /* Higher than anything else within the photo-grid */
 }
 
-
 /* Styling for the header */
 .header-title {
     font-size: 3em; /* Adjust the size as you like */
     color: #fff; /* Adjust the text color as needed */
     margin-bottom: 0.5em; /* Space between the header and button */
 }
-
 
 /* Styling for the button */
 .learn-more-btn {
@@ -96,7 +93,6 @@
     border-radius: 5px; /* Rounded corners */
     transition: background-color 0.3s ease; /* Smooth background color transition */
 }
-
 
 /* Hover effect for the button */
 .learn-more-btn:hover {

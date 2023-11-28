@@ -1,0 +1,14 @@
+.photo-form{
+    display: flex;
+    flex-direction: column;
+}
+
+.photo-form form{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.photo-form img{
+    max-width: 45px;
+}

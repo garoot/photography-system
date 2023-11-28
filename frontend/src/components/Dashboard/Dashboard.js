@@ -2,7 +2,11 @@ import './Dashboard.css'; // Import your CSS file for styling
 import { Link } from 'react-router-dom';
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-
+import Activity from './Activity/Activity'
+import BookingRequest from './BookingRequests/BookingRequests'
+import PhotoGridPhotos from './PhotoGridPhotos/PhotoGridPhotos';
+import PortfolioVideos from './PortfolioVideos/PortfolioVideos'
+import Statistics from './Statistics/Statistics';
 
 const Dashboard = () => {
 
@@ -40,7 +44,7 @@ const Dashboard = () => {
     return (
         <div className='main-container'>
             <div className={`sidebar ${isSidebarOpen ? 'open' : ''}`} ref={sidebarRef}>
-                <Link to="/" className="navbar-logo">
+                <Link to="/" className="sidebar-logo">
                             <img src="/logo-white@1.5x.png" alt="Malak Photo" />
                 </Link>
                 <div className={`sidebar-buttons ${isSidebarOpen ? 'open' : ''}`}>
@@ -64,7 +68,11 @@ const Dashboard = () => {
                 </div>
             </div>
             <div className='display'>
-                Hello
+                {activeButton === 'Activity' && <Activity />}
+                {activeButton === 'Booking Requests' && <BookingRequest />}
+                {activeButton === 'PhotoGrid Photos' && <PhotoGridPhotos />}
+                {activeButton === 'Portfolio Videos' && <PortfolioVideos />}
+                {activeButton === 'Statistics' && <Statistics />}
             </div>
             <button className={`burger-menu ${!isSidebarOpen ? 'visible' : ''}`} onClick={toggleSidebar}>
                 ☰
