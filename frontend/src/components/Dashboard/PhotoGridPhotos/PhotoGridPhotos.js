@@ -4,6 +4,9 @@ import React, { useState, useEffect } from 'react';
 
 const PhotoGridPhotos = () => {
     const [photos, setPhotos] = useState([]);
+    const [newTitle, setNewTitle] = useState('');
+    const [newDescription, setNewDescription] = useState('');
+    const [newFile, setNewFile] = useState(null);
 
     useEffect(() => {
       fetch('http://localhost:4000/portfolio-items') // Adjust the URL as needed
@@ -15,6 +18,43 @@ const PhotoGridPhotos = () => {
         })
         .catch(error => console.error('Error fetching photos:', error));
     }, []);
+
+    // Handle new photo submission
+    const handleNewPhotoSubmit = (e) => {
+        e.preventDefault();
+
+        const formData = new FormData();
+        formData.append('title', newTitle);
+        formData.append('description', newDescription);
+        if (newFile) {
+            formData.append('file', newFile);
+        }
+
+        const token = localStorage.getItem('token');
+        fetch('http://localhost:4000/api/portfolio-items/', {
+            method: 'POST',
+            headers: {
+                'Authorization': 'Bearer ' + token
+            },
+            body: formData
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(newPhoto => {
+            setPhotos(photos => [...photos, newPhoto]);
+            // Reset form
+            setNewTitle('');
+            setNewDescription('');
+            setNewFile(null);
+        })
+        .catch(error => {
+            console.error('There was an error creating the photo!', error);
+        });
+    };
 
     // Handle delete with confirmation
     const handleDelete = photoId => {
@@ -114,6 +154,27 @@ const PhotoGridPhotos = () => {
 
     return (
         <div className='forms-container'>
+            <div className='photo-form'>
+                <h3>Add a new Portfolio Image</h3>
+                <form onSubmit={handleNewPhotoSubmit}>
+                    <input 
+                        type="text"
+                        placeholder="Title"
+                        value={newTitle}
+                        onChange={(e) => setNewTitle(e.target.value)}
+                    />
+                    <input 
+                        type="file" 
+                        onChange={(e) => setNewFile(e.target.files[0])}
+                    />
+                    <textarea 
+                        placeholder="Description"
+                        value={newDescription}
+                        onChange={(e) => setNewDescription(e.target.value)}
+                    />
+                    <button type="submit">Create New Photo</button>
+                </form>
+            </div>
             {photos.map(photo => (
                 <div className='photo-form'>
                     <img 
