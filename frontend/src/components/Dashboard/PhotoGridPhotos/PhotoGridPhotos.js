@@ -16,27 +16,64 @@ const PhotoGridPhotos = () => {
         .catch(error => console.error('Error fetching photos:', error));
     }, []);
 
-    // Handle delete
+    // Handle delete with confirmation
     const handleDelete = photoId => {
-        console.log("deleting ", photoId)
+        // Show confirmation dialog
+        if (window.confirm('Are you sure you want to delete this photo?')) {
+            console.log("deleting ", photoId);
+            const token = localStorage.getItem('token');
+            fetch(`http://localhost:4000/api/portfolio-items/${photoId}`, { 
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + token
+                },
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    // Remove the item from the state
+                    setPhotos(photos => photos.filter(photo => photo._id !== photoId));
+                })
+                .catch(error => {
+                    console.error('There was an error deleting the item!', error);
+                });
+        }
+    };
+
+    // Handle update
+    const handleUpdate = photoId => {
+        const photoToUpdate = photos.find(photo => photo._id === photoId);
+        if (!photoToUpdate) {
+            console.error('Photo not found');
+            return;
+        }
+
         const token = localStorage.getItem('token');
-        fetch(`http://localhost:4000/api/portfolio-items/${photoId}`, { 
-            method: 'DELETE',
+        fetch(`http://localhost:4000/api/portfolio-items/${photoId}`, {
+            method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': 'Bearer ' + token
             },
+            body: JSON.stringify(photoToUpdate)
         })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                // Remove the item from the state
-                setPhotos(photos => photos.filter(photo => photo._id !== photoId));
-            })
-            .catch(error => {
-                console.error('There was an error deleting the item!', error);
-            });
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(updatedPhoto => {
+            // Optionally update the photo in the state if the response contains updated data
+            setPhotos(photos => photos.map(photo => {
+                return photo._id === photoId ? updatedPhoto : photo;
+            }));
+        })
+        .catch(error => {
+            console.error('There was an error updating the item!', error);
+        });
     };
 
     // Handle change in title input
@@ -83,7 +120,7 @@ const PhotoGridPhotos = () => {
                             onChange={(e) => handleDescriptionChange(photo._id, e.target.value)}
                         />
                         <button type="button" onClick={() => handleDelete(photo._id)}>Delete</button>
-                        <button type="button">update</button>
+                        <button type="button" onClick={() => handleUpdate(photo._id)}>Update</button>
                     </form>
                 </div>
                     

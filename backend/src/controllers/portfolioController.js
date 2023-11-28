@@ -5,15 +5,6 @@ const fs = require('fs');
 const path = require('path');
 
 
-// Helper function to delete a file
-// const deleteFile = (filePath) => {
-//     fs.unlink(filePath, (err) => {
-//         if (err) {
-//             console.error("Failed to delete file:", err);
-//         }
-//     });
-// };
-
 const baseDir = path.join(__dirname, '../../'); // Adjust this path as per your directory structure
 const sanitizeFilePath = (filePath) => {
     // Remove double quotes if present
@@ -158,7 +149,7 @@ exports.updatePortfolioItem = async (req, res) => {
 
         const updatedItem = await PortfolioItem.findByIdAndUpdate(req.params.id, updateData, { new: true });
         if (!updatedItem) return res.status(404).json({ message: 'Not found' });
-
+        console.log("item updated successfully...")
         res.json(updatedItem);
     } catch (error) {
         if (req.file) deleteFile(req.file.path);
