@@ -51,13 +51,19 @@ const PhotoGridPhotos = () => {
         }
 
         const token = localStorage.getItem('token');
+        const formData = new FormData();
+        formData.append('title', photoToUpdate.title);
+        formData.append('description', photoToUpdate.description);
+        if (photoToUpdate.file) {
+            formData.append('file', photoToUpdate.file);
+        }
+
         fetch(`http://localhost:4000/api/portfolio-items/${photoId}`, {
             method: 'PUT',
             headers: {
-                'Content-Type': 'application/json',
                 'Authorization': 'Bearer ' + token
             },
-            body: JSON.stringify(photoToUpdate)
+            body: formData // Send as FormData
         })
         .then(response => {
             if (!response.ok) {
@@ -66,7 +72,6 @@ const PhotoGridPhotos = () => {
             return response.json();
         })
         .then(updatedPhoto => {
-            // Optionally update the photo in the state if the response contains updated data
             setPhotos(photos => photos.map(photo => {
                 return photo._id === photoId ? updatedPhoto : photo;
             }));
@@ -96,6 +101,16 @@ const PhotoGridPhotos = () => {
         }));
     };
 
+    // Handle file input change
+    const handleFileChange = (photoId, file) => {
+        setPhotos(photos => photos.map(photo => {
+            if (photo._id === photoId) {
+                return { ...photo, file }; // Temporarily store the file object in state
+            }
+            return photo;
+        }));
+    };
+
 
     return (
         <div className='forms-container'>
@@ -114,6 +129,7 @@ const PhotoGridPhotos = () => {
                         />
                         <input 
                             type="file" 
+                            onChange={(e) => handleFileChange(photo._id, e.target.files[0])}
                         />
                         <textarea 
                             value={photo.description} 
