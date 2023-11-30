@@ -164,7 +164,7 @@ exports.deleteVideoItem = async (req, res) => {
         if (!video) {
             return res.status(404).json({ message: 'Video item not found' });
         }
-
+        console.log("PortfolioVideo deleted successfully...")
         res.status(200).json({ message: 'Video item deleted successfully' });
     } catch (error) {
         res.status(500).json({ message: error.message });

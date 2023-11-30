@@ -50,13 +50,38 @@ const PortfolioVideos = () => {
         });
     };
 
+    const handleDeleteVideo = (videoId) => {
+        // Show confirmation dialog
+        if (window.confirm('Are you sure you want to delete this video?')) {
+            console.log("Deleting video:", videoId);
+            const token = localStorage.getItem('token');
+            fetch(`http://localhost:4000/api/portfolio-videos/${videoId}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                // Remove the video from the state
+                setVideos(videos => videos.filter(video => video._id !== videoId));
+            })
+            .catch(error => {
+                console.error('There was an error deleting the video!', error);
+            });
+        }
+    };
+    
+
     
     return (
         <div className="portfolio-videos-container">
             {videos.map(video => (
                 <form key={video._id} onSubmit={(e) => handleFormSubmit(e, video._id)} className="video-form" encType="multipart/form-data">
                     <input type="hidden" name="_id" value={video._id} />
-    
                     <div className='video-player'>
                         <video width="320" height="240" controls>
                             <source src={`http://localhost:4000/${video.videoUrl}`} type="video/mp4" />
@@ -90,6 +115,7 @@ const PortfolioVideos = () => {
                     </div>
     
                     <button type="submit">Update Video</button>
+                    <button type="button" onClick={() => handleDeleteVideo(video._id)}>Delete Video</button>
                 </form>
             ))}
         </div>
