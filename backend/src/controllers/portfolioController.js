@@ -58,36 +58,36 @@ exports.createPortfolioItem = async (req, res) => {
         res.status(400).json({ message: error.message });
     }
 };
-
 exports.createVideoItem = async (req, res) => {
     try {
         let videoPath, thumbnailPath;
-
+        console.log(req.files)
         if (req.files.video && req.files.thumbnail) {
-            videoPath = req.files.video[0].path.replace(/\\/g, '/');
-            thumbnailPath = req.files.thumbnail[0].path.replace(/\\/g, '/');
+            videoPath = req.files.video[0].path.replace(/\\/g, '/').replace('backend/public', '');
+            thumbnailPath = req.files.thumbnail[0].path.replace(/\\/g, '/').replace('backend/public', '');
         } else {
             throw new Error('Both video and thumbnail files are required');
         }
 
-        videoPath = videoPath.replace('backend/public', '');
-        thumbnailPath = thumbnailPath.replace('backend/public', '');
-
-
         let newVideoData = {
-            title: req.body.title,
+            ...req.body,
             videoUrl: videoPath,
-            thumbnailUrl: thumbnailPath,
-            description: req.body.description
+            thumbnailUrl: thumbnailPath
         };
 
         const newVideo = new VideoItem(newVideoData);
         await newVideo.save();
+        console.log("new PortfolioVideo is created...")
         res.status(201).json(newVideo);
     } catch (error) {
+        if (req.files) {
+            if (req.files.video) deleteFile(req.files.video[0].path); // Cleanup in case of failure
+            if (req.files.thumbnail) deleteFile(req.files.thumbnail[0].path); // Cleanup in case of failure
+        }
         res.status(400).json({ message: error.message });
     }
 };
+
 
 exports.getVideoItems = async (req, res) => {
     try {
@@ -157,6 +157,7 @@ exports.deleteVideoItem = async (req, res) => {
         if (video && video.videoUrl) {
             // Delete the associated file
             deleteFile(video.videoUrl);
+            deleteFile(video.thumbnailUrl);
         }
 
         await VideoItem.findByIdAndDelete(req.params.id);

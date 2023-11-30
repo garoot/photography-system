@@ -14,7 +14,10 @@
     width: 70%;
     min-width: 320px;
     padding: 5px;
-    height: 100%;
+    text-align: start;
+}
+.video-form h3{
+    text-align: center;
 }
 
 .form-field{

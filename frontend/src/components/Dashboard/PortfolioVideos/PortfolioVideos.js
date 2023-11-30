@@ -4,9 +4,12 @@ import './PortfolioVideos.css'; // Import your CSS file for styling
 const PortfolioVideos = () => {
 
     const [videos, setVideos] = useState([]);
+    const [newTitle, setNewTitle] = useState('');
+    const [newDescription, setNewDescription] = useState('');
+    const [newVideoFile, setNewVideoFile] = useState(null);
+    const [newThumbnailFile, setNewThumbnailFile] = useState(null);
 
     useEffect(() => {
-
         // Fetch videos from the API when the component mounts
         const fetchVideos = async () => {
             try {
@@ -75,10 +78,63 @@ const PortfolioVideos = () => {
         }
     };
     
-
+    const handleNewVideoSubmit = async (event) => {
+        event.preventDefault();
+        const formData = new FormData(event.target); // Construct formData from the form
+    
+        const token = localStorage.getItem('token');
+        fetch('http://localhost:4000/api/portfolio-videos', {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            },
+            body: formData
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(newVideo => {
+            setVideos(videos => [...videos, newVideo]);
+            // Optionally, you can reset form fields here if needed
+            event.target.reset(); // Resets the form after successful submission
+        })
+        .catch(error => {
+            console.error('Error creating new video:', error);
+        });
+    };
+    
     
     return (
         <div className="portfolio-videos-container">
+            <h3>Create a new Portfolio Video</h3>            
+            <form onSubmit={handleNewVideoSubmit} className="video-form" encType="multipart/form-data">
+                <div className='form-field'>
+                    <label htmlFor="newTitle">Title:</label>
+                    <input type="text" id="newTitle" name="title" required />
+                </div>
+
+                <div className='form-field'>
+                    <label htmlFor="newVideoFile">Upload Video:</label>
+                    <input type="file" id="newVideoFile" name="video" accept="video/*" required />
+                </div>
+
+                <div className='form-field'>
+                    <label htmlFor="newThumbnailFile">Upload Thumbnail:</label>
+                    <input type="file" id="newThumbnailFile" name="thumbnail" accept="image/*" />
+                </div>
+
+                <div className='form-field'>
+                    <label htmlFor="newDescription">Description:</label>
+                    <textarea id="newDescription" name="description" required />
+                </div>
+
+                <button type="submit">Add New Video</button>
+            </form>
+            {videos[1]? <h3>Modify Existing Portfolio Videos:</h3>:<></> }
+            
             {videos.map(video => (
                 <form key={video._id} onSubmit={(e) => handleFormSubmit(e, video._id)} className="video-form" encType="multipart/form-data">
                     <input type="hidden" name="_id" value={video._id} />
