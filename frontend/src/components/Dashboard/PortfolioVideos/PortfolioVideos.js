@@ -29,26 +29,46 @@ const PortfolioVideos = () => {
     };
 
     
-return (
+    return (
         <div className="portfolio-videos-container">
             {videos.map(video => (
                 <form key={video._id} onSubmit={(e) => handleFormSubmit(e, video._id)} className="video-form">
                     <input type="hidden" name="_id" value={video._id} />
 
-                    <label htmlFor="title">Title:</label>
-                    <input type="text" id="title" name="title" defaultValue={video.title} required />
+                <div className='video-player'>
+                    <video width="320" height="240" controls>
+                        <source src={`http://localhost:4000/${video.videoUrl}`} type="video/mp4" />
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
 
-                    <label htmlFor="videoUrl">Video URL:</label>
-                    <input type="text" id="videoUrl" name="videoUrl" defaultValue={video.videoUrl} required />
+                    <div className='form-field'>
+                        <label htmlFor="title">Title:</label>
+                        <input type="text" id="title" name="title" defaultValue={video.title} required />
+                    </div>
 
-                    <label htmlFor="thumbnailUrl">Current Thumbnail:</label>
-                    <img src={video.thumbnailUrl} alt="Thumbnail" />
-                    <label htmlFor="newThumbnail">Upload New Thumbnail:</label>
-                    <input type="file" id="newThumbnail" name="thumbnailUrl" accept="image/*" />
+                    <div className='form-field'>
+                        <label htmlFor="videoUrl">Video URL:</label>
+                        <input type="text" id="videoUrl" name="videoUrl" defaultValue={video.videoUrl} required />
+                    </div>
 
-                    <label htmlFor="description">Description:</label>
-                    <textarea id="description" name="description" defaultValue={video.description} required />
+                    <div className='form-field'>
+                        <label htmlFor="thumbnailUrl">Current Thumbnail:</label>
+                        <img src={`http://localhost:4000/${video.thumbnailUrl}`} alt="Thumbnail" />
+                    </div>
 
+                    <div className='form-field'>
+                        <label htmlFor="newThumbnail">Upload New Thumbnail:</label>
+                        <input type="file" id="newThumbnail" name="thumbnailUrl" accept="image/*" />
+                    </div>
+
+                    <div className='form-field'>
+                        <label htmlFor="description">Description:</label>
+                        <textarea id="description" name="description" defaultValue={video.description} required />
+                    </div>
+
+
+                    <button type="submit">Delete Video</button>
                     <button type="submit">Update Video</button>
                 </form>
             ))}
