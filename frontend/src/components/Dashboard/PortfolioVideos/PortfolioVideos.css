@@ -1,9 +1,11 @@
 .portfolio-videos-container{
     padding: 25px;
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
+    /* flex-wrap: wrap; */
     width: 80%;
     justify-content: center;
+    align-items: center;
 }
 
 .video-form{
