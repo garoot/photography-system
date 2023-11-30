@@ -115,8 +115,8 @@ exports.getVideoItem = async (req, res) => {
 // Controller to handle Read operation for all items
 exports.getPortfolioItems = async (req, res) => {
     try {
-        // const items = await PortfolioItem.find();
-        const items = await PortfolioItem.find({ type: 'image' });
+        const items = await PortfolioItem.find();
+        // const items = await PortfolioItem.find({ type: 'image' });
 
         res.json(items);
     } catch (error) {

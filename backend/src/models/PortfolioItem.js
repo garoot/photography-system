@@ -3,7 +3,6 @@ const mongoose = require('mongoose');
 const portfolioItemSchema = new mongoose.Schema({
     type: {
         type: String,
-        required: true,
         enum: ['image', 'video']
     },
     thumbnail: {

@@ -107,6 +107,9 @@ const PhotoGridPhotos = () => {
         })
         .then(response => {
             if (!response.ok) {
+                if (response.status === 403) {
+                    throw new Error('Authorization error: Invalid or expired token');
+                }
                 throw new Error('Network response was not ok');
             }
             return response.json();
@@ -116,6 +119,7 @@ const PhotoGridPhotos = () => {
                 return photo._id === photoId ? updatedPhoto : photo;
             }));
         })
+        
         .catch(error => {
             console.error('There was an error updating the item!', error);
         });
