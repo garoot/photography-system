@@ -3,6 +3,8 @@ const VideoItem = require('../models/VideoItem');
 
 const fs = require('fs');
 const path = require('path');
+const mongoose = require('mongoose');
+
 
 
 const baseDir = path.join(__dirname, '../../'); // Adjust this path as per your directory structure
@@ -112,6 +114,62 @@ exports.getVideoItem = async (req, res) => {
     }
 };
 
+exports.updateVideoItem = async (req, res) => {
+    try {
+        const videoItemId = req.params.id;
+        let updateData = req.body;
+
+        const oldVideoItem = await VideoItem.findById(videoItemId);
+
+        // Handle video file update
+        if (req.files.video) {
+            if (oldVideoItem && oldVideoItem.videoUrl) {
+                deleteFile(oldVideoItem.videoUrl); // Replace with your actual file deletion logic
+            }
+            updateData.videoUrl = req.files.video[0].path.replace(/\\/g, '/').replace('backend/public', '');
+        }
+
+        // Handle thumbnail file update
+        if (req.files.thumbnail) {
+            if (oldVideoItem && oldVideoItem.thumbnailUrl) {
+                deleteFile(oldVideoItem.thumbnailUrl); // Replace with your actual file deletion logic
+            }
+            updateData.thumbnailUrl = req.files.thumbnail[0].path.replace(/\\/g, '/').replace('backend/public', '');
+        }
+
+        const updatedVideo = await VideoItem.findByIdAndUpdate(videoItemId, updateData, { new: true });
+        if (!updatedVideo) return res.status(404).json({ message: 'Video item not found' });
+
+        res.json(updatedVideo);
+    } catch (error) {
+        if (req.files.video) deleteFile(req.files.video[0].path); // Cleanup in case of failure
+        if (req.files.thumbnail) deleteFile(req.files.thumbnail[0].path); // Cleanup in case of failure
+        res.status(400).json({ message: error.message });
+    }
+};
+
+
+exports.deleteVideoItem = async (req, res) => {
+    try {
+        const video = await VideoItem.findById(req.params.id); // Get the ID from the request parameters
+
+        if (video && video.videoUrl) {
+            // Delete the associated file
+            deleteFile(video.videoUrl);
+        }
+
+        await VideoItem.findByIdAndDelete(req.params.id);
+
+        if (!video) {
+            return res.status(404).json({ message: 'Video item not found' });
+        }
+
+        res.status(200).json({ message: 'Video item deleted successfully' });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
 // Controller to handle Read operation for all items
 exports.getPortfolioItems = async (req, res) => {
     try {
@@ -156,8 +214,47 @@ exports.updatePortfolioItem = async (req, res) => {
         res.status(400).json({ message: error.message });
     }
 };
-const mongoose = require('mongoose');
 
+
+
+// Controller to handle Delete operation
+exports.deletePortfolioItem = async (req, res) => {
+    try {
+        const item = await PortfolioItem.findById(req.params.id);
+        if (item && item.url) {
+            // Delete the associated file
+            deleteFile(item.url);
+        }
+
+        await PortfolioItem.findByIdAndDelete(req.params.id);
+        res.json({ message: 'Item deleted' });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+// Controller to handle Delete operation
+exports.deleteAllPortfolioItems = async (req, res) => {
+    try {
+        // Find all portfolio items
+        const items = await PortfolioItem.find();
+
+        // Iterate over each item and delete associated files if necessary
+        for (const item of items) {
+            if (item.url) {
+                deleteFile(item.url);
+            }
+        }
+
+        // Delete all items from the database
+        await PortfolioItem.deleteMany({});
+
+        res.json({ message: 'All items deleted' });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+// Not used
 exports.bulkUpdatePortfolioItems = async (req, res) => {
     try {
         const uploadedImages = req.files || []; // Use an empty array if no files are uploaded
@@ -209,41 +306,3 @@ exports.bulkUpdatePortfolioItems = async (req, res) => {
 
 
 
-
-// Controller to handle Delete operation
-exports.deletePortfolioItem = async (req, res) => {
-    try {
-        const item = await PortfolioItem.findById(req.params.id);
-        if (item && item.url) {
-            // Delete the associated file
-            deleteFile(item.url);
-        }
-
-        await PortfolioItem.findByIdAndDelete(req.params.id);
-        res.json({ message: 'Item deleted' });
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-};
-
-// Controller to handle Delete operation
-exports.deleteAllPortfolioItems = async (req, res) => {
-    try {
-        // Find all portfolio items
-        const items = await PortfolioItem.find();
-
-        // Iterate over each item and delete associated files if necessary
-        for (const item of items) {
-            if (item.url) {
-                deleteFile(item.url);
-            }
-        }
-
-        // Delete all items from the database
-        await PortfolioItem.deleteMany({});
-
-        res.json({ message: 'All items deleted' });
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-};

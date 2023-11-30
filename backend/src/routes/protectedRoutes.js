@@ -12,8 +12,12 @@ const { uploadImage, uploadImages, uploadVideo } = require('../middleware/upload
 // Protected CRUD routes using controller functions
 router.post('/portfolio-items', verifyAndAuthorize, uploadImage.single('file'), portfolioController.createPortfolioItem);
 router.put('/portfolio-items/:id', verifyAndAuthorize, uploadImage.single('file'), portfolioController.updatePortfolioItem);
-router.post('/portfolio-items/bulk-update', verifyAndAuthorize, uploadImages, portfolioController.bulkUpdatePortfolioItems);
-router.post('/portfolio-items/videos', verifyAndAuthorize, uploadVideo, portfolioController.createVideoItem);
+// router.post('/portfolio-items/bulk-update', verifyAndAuthorize, uploadImages, portfolioController.bulkUpdatePortfolioItems);
+
+router.post('/portfolio-videos', verifyAndAuthorize, uploadVideo, portfolioController.createVideoItem);
+router.put('/portfolio-videos/:id', verifyAndAuthorize, uploadVideo, portfolioController.updateVideoItem);
+router.delete('/portfolio-videos/:id', verifyAndAuthorize, portfolioController.deleteVideoItem);
+
 router.delete('/portfolio-items/:id', verifyAndAuthorize, portfolioController.deletePortfolioItem);
 router.delete('/portfolio-items', verifyAndAuthorize, portfolioController.deleteAllPortfolioItems);
 
