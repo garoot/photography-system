@@ -25,7 +25,29 @@ const PortfolioVideos = () => {
 
     const handleFormSubmit = async (event, videoId) => {
         event.preventDefault();
-        // Add your form submission logic here
+        const formData = new FormData(event.target); // Construct formData from the form
+
+        const token = localStorage.getItem('token'); // Assuming you store the token in localStorage
+        fetch(`http://localhost:4000/api/portfolio-videos/${videoId}`, {
+            method: 'PUT', // Use PUT for updating
+            headers: {
+                'Authorization': `Bearer ${token}`
+            },
+            body: formData
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(updatedVideo => {
+            setVideos(videos => videos.map(video => video._id === videoId ? updatedVideo : video));
+            // Optionally, you can reset form fields here if needed
+        })
+        .catch(error => {
+            console.error('There was an error updating the video!', error);
+        });
     };
 
     

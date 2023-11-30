@@ -139,7 +139,8 @@ exports.updateVideoItem = async (req, res) => {
 
         const updatedVideo = await VideoItem.findByIdAndUpdate(videoItemId, updateData, { new: true });
         if (!updatedVideo) return res.status(404).json({ message: 'Video item not found' });
-
+        
+        console.log("PortfolioVideo updated successfully..")
         res.json(updatedVideo);
     } catch (error) {
         if (req.files.video) deleteFile(req.files.video[0].path); // Cleanup in case of failure
