@@ -28,3 +28,27 @@
 .photo-form img{
     max-width: 75px;
 }
+
+.delete {
+    background-color: #ff0000; /* Red background */
+    color: white; /* White text */
+    border: none; /* No border */
+    /* Add other styling properties as needed */
+}
+
+.update {
+    background-color: #0051ff; /* Red background */
+    color: white; /* White text */
+    border: none; /* No border */
+    /* Add other styling properties as needed */
+}
+
+.new-photo-button {
+    background-color: #01c21b; /* Red background */
+    color: white; /* White text */
+    border: none; /* No border */
+    /* Add other styling properties as needed */
+}
+
+
+

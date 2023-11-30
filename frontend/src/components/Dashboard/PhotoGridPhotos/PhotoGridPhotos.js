@@ -176,7 +176,7 @@ const PhotoGridPhotos = () => {
                         value={newDescription}
                         onChange={(e) => setNewDescription(e.target.value)}
                     />
-                    <button type="submit">Create New Photo</button>
+                    <button className='new-photo-button' type="submit">Create New Photo</button>
                 </form>
             </div>
             {photos.map(photo => (
@@ -200,8 +200,8 @@ const PhotoGridPhotos = () => {
                             value={photo.description} 
                             onChange={(e) => handleDescriptionChange(photo._id, e.target.value)}
                         />
-                        <button type="button" onClick={() => handleDelete(photo._id)}>Delete</button>
-                        <button type="button" onClick={() => handleUpdate(photo._id)}>Update</button>
+                        <button className='update' type="button" onClick={() => handleUpdate(photo._id)}>Update</button>
+                        <button className='delete' type="button" onClick={() => handleDelete(photo._id)}>Delete</button>
                     </form>
                 </div>
                     

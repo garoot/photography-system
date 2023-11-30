@@ -131,7 +131,7 @@ const PortfolioVideos = () => {
                     <textarea id="newDescription" name="description" required />
                 </div>
 
-                <button type="submit">Add New Video</button>
+                <button className='new-video-button' type="submit">Add New Video</button>
             </form>
             {videos[1]? <h3>Modify Existing Portfolio Videos:</h3>:<></> }
             
@@ -170,8 +170,8 @@ const PortfolioVideos = () => {
                         <textarea id="description" name="description" defaultValue={video.description} required />
                     </div>
     
-                    <button type="submit">Update Video</button>
-                    <button type="button" onClick={() => handleDeleteVideo(video._id)}>Delete Video</button>
+                    <button className='update' type="submit">Update Video</button>
+                    <button className='delete' type="button" onClick={() => handleDeleteVideo(video._id)}>Delete Video</button>
                 </form>
             ))}
         </div>
