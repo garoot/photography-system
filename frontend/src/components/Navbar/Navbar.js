@@ -11,7 +11,7 @@ function Navbar() {
     const menuButtonRef = useRef(null);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     
-
+    
 
     const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
     const loginModalRef = useRef();
@@ -21,9 +21,18 @@ function Navbar() {
         setIsLoggedIn(!!token); // Sets to true if token exists, false otherwise
     }, [isLoggedIn]);
 
+    // const handleLogout = () => {
+    //     localStorage.removeItem('token');
+    //     setIsLoggedIn(false);
+    // };
+
+    // Centralized logout logic
     const handleLogout = () => {
         localStorage.removeItem('token');
         setIsLoggedIn(false);
+        if (isLoginModalOpen) {
+            setIsLoginModalOpen(false);
+        }
     };
 
     // Function to toggle the login modal
