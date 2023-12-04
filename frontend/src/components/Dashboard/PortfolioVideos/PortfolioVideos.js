@@ -1,13 +1,25 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './PortfolioVideos.css'; // Import your CSS file for styling
+import LoginModal from '../../Login/Login';
 
 const PortfolioVideos = () => {
 
     const [videos, setVideos] = useState([]);
-    const [newTitle, setNewTitle] = useState('');
-    const [newDescription, setNewDescription] = useState('');
-    const [newVideoFile, setNewVideoFile] = useState(null);
-    const [newThumbnailFile, setNewThumbnailFile] = useState(null);
+    // const [newTitle, setNewTitle] = useState('');
+    // const [newDescription, setNewDescription] = useState('');
+    // const [newVideoFile, setNewVideoFile] = useState(null);
+    // const [newThumbnailFile, setNewThumbnailFile] = useState(null);
+
+    // handling the openning and closing of the login modal
+    const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+    useEffect(() => {
+        if(!isAuthenticated()) {
+            setIsLoginModalOpen(true);
+        }
+    }, [])
+    const isAuthenticated = () => {
+        return !!localStorage.getItem('token');
+    };
 
     useEffect(() => {
         // Fetch videos from the API when the component mounts
@@ -15,6 +27,9 @@ const PortfolioVideos = () => {
             try {
                 const response = await fetch('http://localhost:4000/portfolio-videos');
                 if (!response.ok) {
+                    if (response.status === 403) {
+                        throw new Error('Authorization error: Invalid or expired token');
+                    }
                     throw new Error('Network response was not ok');
                 }
                 const data = await response.json();
@@ -40,6 +55,9 @@ const PortfolioVideos = () => {
         })
         .then(response => {
             if (!response.ok) {
+                if (response.status === 403) {
+                    throw new Error('Authorization error: Invalid or expired token');
+                }
                 throw new Error('Network response was not ok');
             }
             return response.json();
@@ -67,6 +85,9 @@ const PortfolioVideos = () => {
             })
             .then(response => {
                 if (!response.ok) {
+                    if (response.status === 403) {
+                        throw new Error('Authorization error: Invalid or expired token');
+                    }
                     throw new Error('Network response was not ok');
                 }
                 // Remove the video from the state
@@ -92,6 +113,9 @@ const PortfolioVideos = () => {
         })
         .then(response => {
             if (!response.ok) {
+                if (response.status === 403) {
+                    throw new Error('Authorization error: Invalid or expired token');
+                }
                 throw new Error('Network response was not ok');
             }
             return response.json();
@@ -107,7 +131,7 @@ const PortfolioVideos = () => {
     };
     
     
-    return (
+    return isAuthenticated() ? (
         <div className="portfolio-videos-container">
             <h3>Create a new Portfolio Video</h3>            
             <form onSubmit={handleNewVideoSubmit} className="video-form" encType="multipart/form-data">
@@ -175,7 +199,9 @@ const PortfolioVideos = () => {
                 </form>
             ))}
         </div>
-    );
+    ) : (
+        <LoginModal isOpen={isLoginModalOpen} onClose={() => setIsLoginModalOpen(false)} />
+    )
     
 };
 

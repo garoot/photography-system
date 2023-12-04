@@ -2,17 +2,28 @@ import './Dashboard.css'; // Import your CSS file for styling
 import { Link } from 'react-router-dom';
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Activity from './Activity/Activity'
-import BookingRequest from './BookingRequests/BookingRequests'
+import Activity from './Activity/Activity';
+import BookingRequest from './BookingRequests/BookingRequests';
 import PhotoGridPhotos from './PhotoGridPhotos/PhotoGridPhotos';
-import PortfolioVideos from './PortfolioVideos/PortfolioVideos'
+import PortfolioVideos from './PortfolioVideos/PortfolioVideos';
 import Statistics from './Statistics/Statistics';
+import LoginModal from '../Login/Login';
 
 const Dashboard = () => {
 
     const navigate = useNavigate();
     const [activeButton, setActiveButton] = useState('Activity'); // Default active button
 
+    // handling the openning and closing of the login modal
+    const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+    useEffect(() => {
+        if(!isAuthenticated()) {
+            setIsLoginModalOpen(true);
+        }
+    }, [])
+    const isAuthenticated = () => {
+        return !!localStorage.getItem('token');
+    };
     
     const handleLogout = () => {
         localStorage.removeItem('token');
@@ -41,7 +52,7 @@ const Dashboard = () => {
         };
     }, []);
 
-    return (
+    return isAuthenticated() ? (
         <div className='main-container'>
             <div className={`sidebar ${isSidebarOpen ? 'open' : ''}`} ref={sidebarRef}>
                 <Link to="/" className="sidebar-logo">
@@ -76,9 +87,11 @@ const Dashboard = () => {
             </div>
             <button className={`burger-menu ${!isSidebarOpen ? 'visible' : ''}`} onClick={toggleSidebar}>
                 ☰
-            </button>      
+            </button>
         </div>
-    );
+    ) : (
+        <LoginModal isOpen={isLoginModalOpen} onClose={() => setIsLoginModalOpen(false)} />
+    )
 };
 
 export default Dashboard;

@@ -14,7 +14,7 @@ function Navbar() {
     
 
     const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
-    const loginModalRef = useRef();
+    // const loginModalRef = useRef();
 
     useEffect(() => {
         const token = localStorage.getItem('token');
@@ -26,6 +26,7 @@ function Navbar() {
     //     setIsLoggedIn(false);
     // };
 
+
     // Centralized logout logic
     const handleLogout = () => {
         localStorage.removeItem('token');
@@ -34,6 +35,36 @@ function Navbar() {
             setIsLoginModalOpen(false);
         }
     };
+
+    useEffect(() => {
+        if (isLoggedIn) {
+            const token = localStorage.getItem('token');
+            if (token) {
+                const decodedToken = jwtDecode(token); // Decode the token
+                const currentTime = Date.now() / 1000; // Current time in seconds
+                const timeUntilExpiry = (decodedToken.exp - currentTime) * 1000; // Time until expiry in milliseconds
+    
+                // Set the logout timeout
+                const logoutTimer = setTimeout(() => {
+                    handleLogout();
+                }, timeUntilExpiry);
+    
+                // Clear timeout on cleanup
+                return () => clearTimeout(logoutTimer);
+            }
+        }
+    }, [isLoggedIn]);
+
+    function jwtDecode(token) {
+        const base64Url = token.split('.')[1];
+        const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+        const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+        }).join(''));
+    
+        return JSON.parse(jsonPayload);
+    }
+    
 
     // Function to toggle the login modal
     const toggleLoginModal = () => {
@@ -58,9 +89,9 @@ function Navbar() {
             }
     
             // Logic to close the login modal if clicked outside
-            if (isLoginModalOpen && loginModalRef.current && !loginModalRef.current.contains(event.target)) {
-                setIsLoginModalOpen(false);
-            }
+            // if (isLoginModalOpen && loginModalRef.current && !loginModalRef.current.contains(event.target)) {
+            //     setIsLoginModalOpen(false);
+            // }
         };
     
         // Add event listener
@@ -146,7 +177,8 @@ function Navbar() {
                         )}
                     </div>
             </div>
-            <LoginModal isOpen={isLoginModalOpen} onClose={() => setIsLoginModalOpen(false)} modalRef={loginModalRef} />
+            {/* <LoginModal isOpen={isLoginModalOpen} onClose={() => setIsLoginModalOpen(false)} modalRef={loginModalRef} /> */}
+            <LoginModal isOpen={isLoginModalOpen} onClose={() => setIsLoginModalOpen(false)} />
         </nav>
     );
 }

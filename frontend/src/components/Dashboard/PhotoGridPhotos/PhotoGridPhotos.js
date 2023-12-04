@@ -1,3 +1,4 @@
+import LoginModal from '../../Login/Login';
 import './PhotoGridPhotos.css'; // Import your CSS file for styling
 import React, { useState, useEffect } from 'react';
 
@@ -7,6 +8,17 @@ const PhotoGridPhotos = () => {
     const [newTitle, setNewTitle] = useState('');
     const [newDescription, setNewDescription] = useState('');
     const [newFile, setNewFile] = useState(null);
+
+    // handling the openning and closing of the login modal
+    const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+    useEffect(() => {
+        if(!isAuthenticated()) {
+            setIsLoginModalOpen(true);
+        }
+    }, [])
+    const isAuthenticated = () => {
+        return !!localStorage.getItem('token');
+    };
 
     useEffect(() => {
       fetch('http://localhost:4000/portfolio-items') // Adjust the URL as needed
@@ -40,6 +52,9 @@ const PhotoGridPhotos = () => {
         })
         .then(response => {
             if (!response.ok) {
+                if (response.status === 403) {
+                    throw new Error('Authorization error: Invalid or expired token');
+                }
                 throw new Error('Network response was not ok');
             }
             return response.json();
@@ -71,6 +86,9 @@ const PhotoGridPhotos = () => {
             })
                 .then(response => {
                     if (!response.ok) {
+                        if (response.status === 403) {
+                            throw new Error('Authorization error: Invalid or expired token');
+                        }
                         throw new Error('Network response was not ok');
                     }
                     // Remove the item from the state
@@ -155,8 +173,7 @@ const PhotoGridPhotos = () => {
         }));
     };
 
-
-    return (
+    return isAuthenticated() ? (
         <div className='forms-container'>
             <div className='photo-form'>
                 <h3>Add a new Portfolio Image</h3>
@@ -207,7 +224,9 @@ const PhotoGridPhotos = () => {
                     
             ))}
         </div>
-    );
+    ) : (
+        <LoginModal isOpen={isLoginModalOpen} onClose={() => setIsLoginModalOpen(false)} />
+        )
 };
 
 export default PhotoGridPhotos;

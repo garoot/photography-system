@@ -3,10 +3,11 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 
-const LoginModal = ({ isOpen, onClose, modalRef }) => {
+const LoginModal = ({ isOpen, onClose }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
+    const modalRef = useRef();
 
     const handleLogin = async (event) => {
         event.preventDefault(); // Prevent the form from submitting in the traditional way
@@ -38,6 +39,26 @@ const LoginModal = ({ isOpen, onClose, modalRef }) => {
             console.error('Login request failed:', error);
         }
     };
+
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (modalRef.current && !modalRef.current.contains(event.target)) {
+                onClose();
+            }
+        };
+    
+        // Attach the event listener
+        if (isOpen) {
+            document.addEventListener('mousedown', handleClickOutside);
+        }
+    
+        // Clean up the event listener
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, [isOpen, onClose, modalRef]);
+
+
 
     if (!isOpen) return null;
 

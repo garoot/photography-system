@@ -3,7 +3,9 @@
     padding: 0px; /* Adjust the padding as needed */
     margin: -5px;
     display: flex;
-    flex-wrap: wrap;
+    /* the flex-wrap was ruining the photo-column at width between 767 and 762 px */
+    /* flex-wrap: wrap; */
+    overflow: hidden;
     justify-content: center;
     z-index: 5;
     height: 100vh;
@@ -16,6 +18,7 @@
     will-change: transform;
     flex: 0 0 auto; 
     width: calc((100% / 6) - 10px); /* Adjust '6' to change the number of columns */
+    /* make it a bit longer so scroll animation doesn't cut images */
     height: 150%;
     overflow: hidden;
 }
@@ -34,7 +37,7 @@
 
 @media (max-width: 768px) {
     .photo-column {
-        width: calc((100% / 3) - 10px); /* Adjust '3' for the number of columns on smaller screens */
+        width: calc((100% / 3) - 10px);
     }
 }
 
